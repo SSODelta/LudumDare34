@@ -3,15 +3,15 @@ using System.Collections;
 
 public class CommandIssuer : MonoBehaviour {
 
-	private int t = 0, tmax = 10;
+	private int t = 0, tmax = 12;
 	private Player p;
 	private Command cmd;
 
 	private int ts = 0, tsmax = 50;
-	private int tw = 0, twmax = 20;
+	private int tw = 0, twmax = 13;
 
 	private SpriteRenderer sr;
-	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, WALK;
+	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
 
 	private string[] cmds;
 
@@ -25,7 +25,12 @@ public class CommandIssuer : MonoBehaviour {
 		KICK_FLY   = Resources.Load <Sprite> ("Sprites/FlyingKick");
 		KICK_SLIDE = Resources.Load <Sprite> ("Sprites/SlideKick");
 		PUNCH      = Resources.Load <Sprite> ("Sprites/FistPunch");
-		WALK       = Resources.Load <Sprite> ("Sprites/Walk");
+		WALK1      = Resources.Load <Sprite> ("Sprites/Walk1_1");
+		WALK2      = Resources.Load <Sprite> ("Sprites/Walk2_1");
+		WALK3      = Resources.Load <Sprite> ("Sprites/Walk3_1");
+		WALK4      = Resources.Load <Sprite> ("Sprites/Walk4_1");
+		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
+		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
 	}
 
 	public bool isSprite(Sprite s){
@@ -84,23 +89,33 @@ public class CommandIssuer : MonoBehaviour {
 		if (p.RIGHT && p.transform.localScale.x > 0)
 			faceRight ();
 
-		if (!p.LEFT && !p.RIGHT && ++ts == tsmax) {
+		if (!p.LEFT && !p.RIGHT && ++ts >= tsmax) {
 			ts=0;
 
-			if(isSprite(STAND_1)){
+			if(isSprite(STAND_1) || isSprite (WALK1) || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)){
 				setSprite(STAND_2);
 			} else if(isSprite(STAND_2)) {
 				setSprite(STAND_1);}
 		}
 
-		if ((p.LEFT || p.RIGHT) && p.dashSpeed==0 && ++tw == twmax) {
+		if ((p.LEFT || p.RIGHT) && p.dashSpeed==0 && ++tw >= twmax) {
 			tw=0;
 
 			if(isSprite (STAND_2)){
 				setSprite (STAND_1);
 			} else if(isSprite(STAND_1)){
-				setSprite (WALK);
-			} else if (isSprite(WALK)){
+				setSprite (WALK1);
+			} else if(isSprite(WALK1)){
+				setSprite (WALK2);
+			} else if(isSprite(WALK2)){
+				setSprite (WALK3);
+			} else if(isSprite(WALK3)){
+				setSprite (WALK4);
+			} else if(isSprite(WALK4)){
+				setSprite (WALK5);
+			} else if(isSprite(WALK5)){
+				setSprite (WALK6);
+			} else if(isSprite(WALK6)){
 				setSprite (STAND_1);
 			}
 		}

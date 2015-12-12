@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 
 	private void jump(float dx){
 		if (GROUNDED) {
-			rb.AddForce (new Vector2 (dx * 100, 200));
+			rb.AddForce (new Vector2 (dx * 100, 275));
 			GROUNDED = false;
 		}
 	}
@@ -31,7 +31,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		startSlide (RIGHT ? 1 : -1);
+		if(punch==0)
+			startSlide (RIGHT ? 1 : -1);
 		GROUNDED = true;
 
 	}
