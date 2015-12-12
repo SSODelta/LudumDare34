@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 77966f3531815fa4b9b520c9d15bcce1
-timeCreated: 1449949628
+guid: 3d44da9d66f16a241add635787da0597
+timeCreated: 1449955550
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Walk_0
+    21300000: Walk2_1_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,12 +50,12 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Walk_0
+    - name: Walk2_1_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 6
         y: 11
-        width: 18
+        width: 14
         height: 18
       alignment: 7
       pivot: {x: .5, y: 0}
