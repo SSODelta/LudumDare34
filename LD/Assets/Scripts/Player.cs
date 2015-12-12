@@ -31,8 +31,9 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if(punch==0)
-			startSlide (RIGHT ? 1 : -1);
+        if (GROUNDED) return;
+		if (punch==0)
+			 startSlide (RIGHT ? 1 : -1);
 		GROUNDED = true;
 
 	}
