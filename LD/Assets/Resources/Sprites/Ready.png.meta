@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 22c748a05d5cbf142bb6096e021adbd9
-timeCreated: 1450035910
+guid: 847eb73886e2036479e3760cfbebd593
+timeCreated: 1450037461
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: HurtDown_0
+    21300000: Ready_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,15 +50,15 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: HurtDown_0
+    - name: Ready_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 9
-        width: 20
-        height: 14
-      alignment: 9
-      pivot: {x: .624289155, y: .642044663}
+        x: 9
+        y: 6
+        width: 53
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

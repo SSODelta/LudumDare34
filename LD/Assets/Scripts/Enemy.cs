@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	
-	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH, HURT_UP, HURT_DOWN;
+	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH, DEAD, HURT_UP, HURT_DOWN;
 	private SpriteRenderer sr;
 
 	private float dashSpeed = 0;
@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour {
 		KICK_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/KickDown");
 		HURT_UP    = Resources.Load <Sprite> ("Sprites/Enemies/HurtUp");
 		HURT_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/HurtDown");
+		DEAD  = Resources.Load <Sprite> ("Sprites/Enemies/Dead");
 
 		setSprite (KICK_DOWN);
 		ta = Mathf.FloorToInt (Random.Range (0, tamax));
@@ -57,7 +58,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void punch(){
-		//p.ci.playSound(p.ci.aWOOSH;
+		p.ci.playSound(p.ci.aWOOSH);
 		int dx = 1;
 		if (transform.localScale.x < 0)
 			dx = -1;
@@ -95,7 +96,7 @@ public class Enemy : MonoBehaviour {
 		if (ALIVE) {
 			setSprite (RUN1);
 		} else {
-			//setSprite(DEAD);
+			setSprite(DEAD);
 		}
 	}
 
