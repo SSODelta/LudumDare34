@@ -9,9 +9,10 @@ public class CommandIssuer : MonoBehaviour {
 
 	private int ts = 0, tsmax = 50;
 	private int tw = 0, twmax = 13;
+	private int th = 0;
 
 	private SpriteRenderer sr;
-	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
+	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
 
 	private string[] cmds;
 
@@ -25,6 +26,7 @@ public class CommandIssuer : MonoBehaviour {
 		KICK_FLY   = Resources.Load <Sprite> ("Sprites/FlyingKick");
 		KICK_SLIDE = Resources.Load <Sprite> ("Sprites/SlideKick");
 		PUNCH      = Resources.Load <Sprite> ("Sprites/FistPunch");
+		HURT       = Resources.Load <Sprite> ("Sprites/Hurt");
 		WALK1      = Resources.Load <Sprite> ("Sprites/Walk1_1");
 		WALK2      = Resources.Load <Sprite> ("Sprites/Walk2_1");
 		WALK3      = Resources.Load <Sprite> ("Sprites/Walk3_1");
@@ -80,8 +82,18 @@ public class CommandIssuer : MonoBehaviour {
 		p.dashSpeed = 0;
 	}
 
+	public void hurt(){
+		th = 45;
+		setSprite (HURT);
+	}
+
 	// Update is called once per frame
 	void Update () {
+
+		if (th > 0) {
+			th--;
+			return;
+		}
 
 		if (p.LEFT && p.transform.localScale.x < 0)
 			faceLeft ();
@@ -92,16 +104,16 @@ public class CommandIssuer : MonoBehaviour {
 		if (!p.LEFT && !p.RIGHT && ++ts >= tsmax) {
 			ts=0;
 
-			if(isSprite(STAND_1) || isSprite (WALK1) || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)){
+			if(isSprite(STAND_1) || isSprite (WALK1)  || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)){
 				setSprite(STAND_2);
-			} else if(isSprite(STAND_2)) {
+			} else if(isSprite(STAND_2)|| isSprite (HURT)) {
 				setSprite(STAND_1);}
 		}
 
 		if ((p.LEFT || p.RIGHT) && p.dashSpeed==0 && ++tw >= twmax) {
 			tw=0;
 
-			if(isSprite (STAND_2)){
+			if(isSprite (STAND_2) || isSprite (HURT)){
 				setSprite (STAND_1);
 			} else if(isSprite(STAND_1)){
 				setSprite (WALK1);
@@ -159,6 +171,8 @@ public class CommandIssuer : MonoBehaviour {
 				p.stopSlide();
 		}
 
+		if (Input.GetKeyUp (KeyCode.K))
+			hurt ();
 		issue ();
 	}
 	

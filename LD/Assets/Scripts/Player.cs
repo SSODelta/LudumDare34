@@ -16,8 +16,8 @@ public class Player : MonoBehaviour {
 	private BoxCollider2D col;
 
 	public void setBoundingBox(float size){
-		col.size   = new Vector2 (0.12f,  size);
-		col.offset = new Vector2 (0.025f, size / 2f);
+		col.size   = new Vector2 (0.16f,  size);
+		col.offset = new Vector2 (0.02f, size / 2f);
 	}
 
 	// Use this for initialization
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void startSlide(float mult){
-		slideCount = 10;
+		slideCount = 7;
 		ci.setSprite (ci.KICK_SLIDE);
 		dashSpeed = 0.3f * mult;
 	}

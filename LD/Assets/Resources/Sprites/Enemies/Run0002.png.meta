@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8f9b8283ecc482444bdb134669191244
-timeCreated: 1450019767
+guid: 7d82cf5542154614188f27f07aa70c4b
+timeCreated: 1450017302
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Hurt_0
+    21300000: Run0002_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,13 +50,13 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Hurt_0
+    - name: Run0002_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 11
-        width: 18
-        height: 18
+        x: 9
+        y: 7
+        width: 12
+        height: 20
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
