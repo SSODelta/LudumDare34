@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 	private CommandIssuer ci;
 	private bool GROUNDED = false;
 
+	private int slideCount = 0;
+
 	public float dashSpeed = 0;
 	public int punch = 0;
 	private BoxCollider2D col;
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour {
 
 	private void jump(float dx){
 		if (GROUNDED) {
-			rb.AddForce (new Vector2 (dx * 100, 275));
+			rb.AddForce (new Vector2 (dx * 100, 425));
 			GROUNDED = false;
 		}
 	}
@@ -65,19 +67,24 @@ public class Player : MonoBehaviour {
 	}
 
 	public void stopSlide(){
+		if (slideCount > 0)
+			return;
 		dashSpeed = 0;
 		ci.idle ();
 	}
 
 	public void startSlide(float mult){
+		slideCount = 10;
 		ci.setSprite (ci.KICK_SLIDE);
 		dashSpeed = 0.3f * mult;
 	}
 
-	private const float MAX_SPEED = 100f;
+	private const float MAX_SPEED = 6.5f;
 	private const float WALK_SPEED = 0.1f;
 	// Update is called once per frame
 	void Update () {
+		if (slideCount > 0)
+			slideCount--;
 		if (punch > 0) {
 			punch--;
 			if(punch==0){

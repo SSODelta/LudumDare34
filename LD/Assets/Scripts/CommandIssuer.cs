@@ -76,7 +76,7 @@ public class CommandIssuer : MonoBehaviour {
 	}
 
 	public void idle(){
-		setSprite (STAND_1);
+		setSprite (STAND_2);
 		p.dashSpeed = 0;
 	}
 
