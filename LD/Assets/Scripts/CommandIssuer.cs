@@ -106,7 +106,7 @@ public class CommandIssuer : MonoBehaviour {
 
 			if(isSprite(STAND_1) || isSprite (WALK1)  || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)){
 				setSprite(STAND_2);
-			} else if(isSprite(STAND_2)|| isSprite (HURT)) {
+			} else if(isSprite(STAND_2)|| isSprite (HURT) || isSprite (KICK_FLY)) {
 				setSprite(STAND_1);}
 		}
 
