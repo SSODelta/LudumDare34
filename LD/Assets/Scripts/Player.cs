@@ -4,9 +4,9 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	private Rigidbody2D rb;
-	public bool RIGHT = false, LEFT = false;
+	public  bool RIGHT = false, LEFT = false;
 
-	private CommandIssuer ci;
+	public  CommandIssuer ci;
 	private bool GROUNDED = false;
 
 	private int slideCount = 0;
