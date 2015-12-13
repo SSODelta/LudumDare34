@@ -14,10 +14,16 @@ public class CommandIssuer : MonoBehaviour {
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
 
+	private AudioClip aPUNCH;
+
 	private string[] cmds;
+	private AudioSource source;
+
 
 	// Use this for initialization
 	void Start () {
+
+
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
 
@@ -33,6 +39,13 @@ public class CommandIssuer : MonoBehaviour {
 		WALK4      = Resources.Load <Sprite> ("Sprites/Walk4_1");
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
+
+		aPUNCH     = (Resources.Load("Sounds/Punch3") as AudioClip);
+	}
+
+	private void playSound(AudioClip a){
+		source.clip = a;
+		source.Play ();
 	}
 
 	public bool isSprite(Sprite s){
@@ -44,6 +57,7 @@ public class CommandIssuer : MonoBehaviour {
 	}
 
 	public void punch(){
+		playSound (aPUNCH);
 		p.punch = 30;
 		setSprite (PUNCH);
 		p.dashSpeed = p.transform.localScale.x < 0 ? 0.15f : -0.15f;
@@ -52,6 +66,7 @@ public class CommandIssuer : MonoBehaviour {
 	public void setPlayer(Player pl){
 		this.p = pl;
 		this.sr = p.GetComponent<SpriteRenderer> ();
+		this.source = p.GetComponent<AudioSource> ();
 	}
 	
 	void issue(){	
