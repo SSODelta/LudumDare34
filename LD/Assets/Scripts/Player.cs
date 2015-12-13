@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
 
 	private void jump(float dx){
 		if (GROUNDED) {
+			ci.playSound(ci.aKICK_1);
 			rb.AddForce (new Vector2 (dx * 100, 425));
 			GROUNDED = false;
 		}
@@ -43,8 +44,11 @@ public class Player : MonoBehaviour {
 
 		if (coll.collider.name.Contains ("Enemy")) {
 			Enemy e = coll.collider.GetComponent<Enemy>();
+
+			//Kill enemy
 			if(coll.collider.transform.position.x >
 			   transform.position.x){
+				ci.playSound(ci.aPUNCH_1);
 				e.kill(1);
 			} else {
 				e.kill(-1);
@@ -86,6 +90,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void startSlide(float mult){
+		ci.playSound(ci.aKICK_1);
 		slideCount = 7;
 		ci.setSprite (ci.KICK_SLIDE);
 		dashSpeed = 0.3f * mult;

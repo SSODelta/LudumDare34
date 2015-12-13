@@ -14,7 +14,7 @@ public class CommandIssuer : MonoBehaviour {
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
 
-	private AudioClip aPUNCH;
+	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH;
 
 	private string[] cmds;
 	private AudioSource source;
@@ -40,10 +40,17 @@ public class CommandIssuer : MonoBehaviour {
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
 
-		aPUNCH     = (Resources.Load("Sounds/Punch3") as AudioClip);
+		aPUNCH     = (Resources.Load("Sounds/Punch") as AudioClip);
+		aPUNCH_1     = (Resources.Load("Sounds/Punch1") as AudioClip);
+		aPUNCH_2     = (Resources.Load("Sounds/Punch2") as AudioClip);
+		aKICK     = (Resources.Load("Sounds/Kick") as AudioClip);
+		aKICK_1     = (Resources.Load("Sounds/Kick1") as AudioClip);
+		aWALK_1     = (Resources.Load("Sounds/Walk1") as AudioClip);
+		aWOOSH     = (Resources.Load("Sounds/Woosh") as AudioClip);
+
 	}
 
-	private void playSound(AudioClip a){
+	public void playSound(AudioClip a){
 		source.clip = a;
 		source.Play ();
 	}
@@ -98,6 +105,7 @@ public class CommandIssuer : MonoBehaviour {
 	}
 
 	public void hurt(){
+		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);
 	}

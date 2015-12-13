@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		rb = this.GetComponent<Rigidbody2D> ();
 		p = GameObject.Find ("player").GetComponent<Player> ();
 		sr = this.GetComponent<SpriteRenderer> ();
@@ -56,7 +57,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void punch(){
-
+		//p.ci.playSound(p.ci.aWOOSH;
 		int dx = 1;
 		if (transform.localScale.x < 0)
 			dx = -1;
