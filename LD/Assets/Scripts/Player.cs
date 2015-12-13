@@ -41,7 +41,7 @@ public class Player : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
         if (GROUNDED) return;
-		if (punch==0)
+		if (punch==0 && Mathf.Abs(rb.velocity.x) > 0.01)
 			 startSlide (RIGHT ? 1 : -1);
 		GROUNDED = true;
 
