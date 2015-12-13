@@ -11,12 +11,19 @@ public class Player : MonoBehaviour {
 
 	public float dashSpeed = 0;
 	public int punch = 0;
+	private BoxCollider2D col;
+
+	public void setBoundingBox(float size){
+		col.size   = new Vector2 (0.12f,  size);
+		col.offset = new Vector2 (0.025f, size / 2f);
+	}
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		ci = GameObject.Find ("cmds").GetComponent<CommandIssuer> ();
 		ci.setPlayer (this);
+		col = this.GetComponent<BoxCollider2D> ();
 	}
 
 	private void jump(float dx){
@@ -67,6 +74,7 @@ public class Player : MonoBehaviour {
 		dashSpeed = 0.3f * mult;
 	}
 
+	private const float MAX_SPEED = 100f;
 	private const float WALK_SPEED = 0.1f;
 	// Update is called once per frame
 	void Update () {
@@ -77,21 +85,25 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (dashSpeed == 0) {
+			setBoundingBox(0.18f);
 			if (RIGHT && !ci.isSprite(ci.STAND_2)) {
-				transform.Translate (new Vector3 (WALK_SPEED, 0, 0));
+				rb.AddForce (100*new Vector2 (WALK_SPEED, 0));
 			}
 			if (LEFT && !ci.isSprite(ci.STAND_2)) {
-				transform.Translate (new Vector3 (-WALK_SPEED, 0, 0));
+				rb.AddForce (100*new Vector2 (-WALK_SPEED, 0));
 			}
 		} else {
+			setBoundingBox(0.13f);
 			if(punch==0 && (!LEFT && !RIGHT))
 				stopSlide();
 			dashSpeed *= 0.95f;
-			transform.Translate(new Vector3(dashSpeed, 0,0));
+			rb.AddForce (100*new Vector2 (dashSpeed, 0));
 			if(Mathf.Abs(dashSpeed) < 0.01)
 				stopSlide();
 
 		}
-
+		if(rb.velocity.magnitude > MAX_SPEED)
+			rb.velocity *= MAX_SPEED / rb.velocity.magnitude;
 	}
+
 }
