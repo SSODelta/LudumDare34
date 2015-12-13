@@ -10,8 +10,6 @@ public class CommandIssuer : MonoBehaviour {
 	private int ts = 0, tsmax = 50;
 	private int tw = 0, twmax = 13;
 
-    private int tt = 0, ttmax = 110;
-
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
 
@@ -84,14 +82,6 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
-        if(++tt >= ttmax)
-        {
-            tt = 0;
-            GameObject go = (GameObject)Instantiate(Resources.Load("Ball"));
-            BallController bc = go.GetComponent<BallController>();
-            bc.spawn(p);
-        }
 
 		if (p.LEFT && p.transform.localScale.x < 0)
 			faceLeft ();

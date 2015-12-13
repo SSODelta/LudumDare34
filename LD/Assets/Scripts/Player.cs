@@ -77,20 +77,18 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (dashSpeed == 0) {
-			if (RIGHT && !ci.isSprite(ci.STAND_2))
-            {
-                rb.MovePosition(rb.position + (new Vector2(WALK_SPEED, 0)));
-            }
-			if (LEFT && !ci.isSprite(ci.STAND_2))
-            {
-                rb.MovePosition(rb.position - (new Vector2(WALK_SPEED, 0)));
-            }
+			if (RIGHT && !ci.isSprite(ci.STAND_2)) {
+				transform.Translate (new Vector3 (WALK_SPEED, 0, 0));
+			}
+			if (LEFT && !ci.isSprite(ci.STAND_2)) {
+				transform.Translate (new Vector3 (-WALK_SPEED, 0, 0));
+			}
 		} else {
 			if(punch==0 && (!LEFT && !RIGHT))
 				stopSlide();
 			dashSpeed *= 0.95f;
-            rb.MovePosition(rb.position + new Vector2(dashSpeed, 0));
-            if (Mathf.Abs(dashSpeed) < 0.01)
+			transform.Translate(new Vector3(dashSpeed, 0,0));
+			if(Mathf.Abs(dashSpeed) < 0.01)
 				stopSlide();
 
 		}
