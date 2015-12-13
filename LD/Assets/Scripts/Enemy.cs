@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	
-	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH;
+	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH, HURT_UP, HURT_DOWN;
 	private SpriteRenderer sr;
 
 	private float dashSpeed = 0;
@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour {
 	private int ta = 0, tamax = 10;
 	private int tk = 0, tp = 0;
 
-	private bool GROUNDED = false;
+	private bool GROUNDED = false, ALIVE =true;
 
 	private Rigidbody2D rb;
 	private Player p;
@@ -30,11 +30,21 @@ public class Enemy : MonoBehaviour {
 		PUNCH      = Resources.Load <Sprite> ("Sprites/Enemies/Punch");
 		KICK_UP    = Resources.Load <Sprite> ("Sprites/Enemies/KickUp");
 		KICK_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/KickDown");
+		HURT_UP    = Resources.Load <Sprite> ("Sprites/Enemies/HurtUp");
+		HURT_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/HurtDown");
 
 		setSprite (KICK_DOWN);
 		ta = Mathf.FloorToInt (Random.Range (0, tamax));
 
 
+	}
+
+	public void kill(int dx){
+		if (!ALIVE)
+			return;
+		setSprite (HURT_UP);
+		rb.AddForce (new Vector2 (dx * 150, 575));
+		ALIVE = false;
 	}
 
 	private bool isSprite(Sprite s){
@@ -78,14 +88,25 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if (GROUNDED) return;
+		if (GROUNDED || coll.collider.name.Contains("layer")) return;
 		GROUNDED = true;	
-		setSprite (RUN1);
+
+		if (ALIVE) {
+			setSprite (RUN1);
+		} else {
+			//setSprite(DEAD);
+		}
 	}
 
 	private const float MAX_SPEED = 5;
 	// Update is called once per frame
 	void Update () {
+
+		if (isSprite (HURT_UP) && rb.velocity.y < 0)
+			setSprite (HURT_DOWN);
+
+		if (!ALIVE)
+			return;
 
 		if (isSprite (KICK_UP) && rb.velocity.y < 0)
 			setSprite (KICK_DOWN);
@@ -109,10 +130,13 @@ public class Enemy : MonoBehaviour {
 			punch ();
 		}
 
-		if (GROUNDED && ++ta >= tamax) {
+		if (++ta >= tamax && GROUNDED ) {
 			ta = 0;
 
-			if(isSprite(RUN1) || isSprite(KICK_DOWN) || isSprite(KICK_UP) || isSprite(PUNCH)){
+			if(isSprite(KICK_DOWN) || isSprite(KICK_UP) || isSprite(PUNCH))
+				setSprite (RUN2);
+
+			if(isSprite(RUN1)){
 				setSprite(RUN2);
 				tamax+=5;
 			} else if(isSprite(RUN2)){

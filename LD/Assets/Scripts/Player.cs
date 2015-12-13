@@ -40,6 +40,18 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
+
+		if (coll.collider.name.Contains ("Enemy")) {
+			Enemy e = coll.collider.GetComponent<Enemy>();
+			if(coll.collider.transform.position.x >
+			   transform.position.x){
+				e.kill(1);
+			} else {
+				e.kill(-1);
+			}
+
+		}
+
         if (GROUNDED) return;
 		if (punch==0 && Mathf.Abs(rb.velocity.x) > 0.01)
 			 startSlide (RIGHT ? 1 : -1);

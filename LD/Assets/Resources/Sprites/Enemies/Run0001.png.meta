@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 62dd3df5efae0894c9f7e5bd358bc26c
-timeCreated: 1450017270
+timeCreated: 1450023489
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -28,7 +28,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 32
+  maxTextureSize: 64
   textureSettings:
     filterMode: 0
     aniso: 16
@@ -53,7 +53,7 @@ TextureImporter:
     - name: Run0001_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 27
         y: 6
         width: 10
         height: 21
