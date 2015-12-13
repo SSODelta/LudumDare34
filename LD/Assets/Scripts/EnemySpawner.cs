@@ -15,7 +15,6 @@ public class EnemySpawner : MonoBehaviour {
 
 	public void spawnEnemy(){
 		GameObject enemy = (GameObject)Instantiate (Resources.Load ("Enemy"));
-		Enemy e = enemy.GetComponent<Enemy> ();
 		enemy.transform.position = transform.position;
 	}
 }
