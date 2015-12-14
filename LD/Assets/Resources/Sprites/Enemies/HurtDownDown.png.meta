@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 7c768cfe384c37549adf6c3ebda4fcd5
-timeCreated: 1450118251
+timeCreated: 1450121933
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: HurtDownDown_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,18 +27,18 @@ TextureImporter:
   cubemapConvolutionSteps: 8
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
-  maxTextureSize: 2048
+  textureFormat: -3
+  maxTextureSize: 64
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 0
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +49,17 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: HurtDownDown_0
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 8
+        width: 14
+        height: 16
+      alignment: 9
+      pivot: {x: .436587185, y: .738590598}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

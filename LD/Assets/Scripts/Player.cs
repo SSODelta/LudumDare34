@@ -128,6 +128,7 @@ public class Player : MonoBehaviour {
 	private const float WALK_SPEED = 0.4f;
 	// Update is called once per frame
 	void Update () {
+
 		if (DEAD) {
 			if(rb.velocity.y < 0 || rb.gravityScale==0)
 				ci.setSprite(ci.DEAD);

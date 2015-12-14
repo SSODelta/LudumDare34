@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	
-	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH, DEAD, HURT_UP, HURT_DOWN;
+	private Sprite RUN1, RUN2, RUN3, RUN4, KICK_UP, KICK_DOWN, PUNCH, DEAD, HURT_UP, HURT_DOWN, HURT_DOWN2;
 	private SpriteRenderer sr;
 
 	private float dashSpeed = 0;
@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour {
 		KICK_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/KickDown");
 		HURT_UP    = Resources.Load <Sprite> ("Sprites/Enemies/HurtUp");
 		HURT_DOWN  = Resources.Load <Sprite> ("Sprites/Enemies/HurtDown");
+		HURT_DOWN2 = Resources.Load <Sprite> ("Sprites/Enemies/HurtDownDown");
 		DEAD  = Resources.Load <Sprite> ("Sprites/Enemies/Dead");
 
 		setSprite (KICK_DOWN);
@@ -142,6 +143,9 @@ public class Enemy : MonoBehaviour {
 
 		if (isSprite (HURT_UP) && rb.velocity.y < 0)
 			setSprite (HURT_DOWN);
+
+		if (isSprite (HURT_DOWN) && rb.velocity.y < -7.5f)
+			setSprite (HURT_DOWN2);
 
 		if (!ALIVE)
 			return;
