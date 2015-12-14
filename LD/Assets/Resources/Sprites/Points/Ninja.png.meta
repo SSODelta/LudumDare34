@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b1b11e9a4e8ad89479faf08585709072
-timeCreated: 1450093232
+guid: 78586ec0b25ad614d9870436ee34560c
+timeCreated: 1450092832
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ButtonUp_0
+    21300000: Ninja_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,12 +51,12 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: ButtonUp_0
+    - name: Ninja_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 1
-        width: 18
+        x: 18
+        y: 10
+        width: 28
         height: 14
       alignment: 0
       pivot: {x: .5, y: .5}
