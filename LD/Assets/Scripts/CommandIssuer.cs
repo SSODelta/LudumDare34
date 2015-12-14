@@ -15,16 +15,20 @@ public class CommandIssuer : MonoBehaviour {
 
 	private ScoreController sc;
 
+	private GameObject ko;
+
 	private SpriteRenderer btnLeft, btnRight;
 
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 	public Sprite HP3, HP2, HP1;
 
-	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH;
+	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG;
+	public AudioClip mLOW, mNORMAL;
 
 	private string[] cmds;
 	private AudioSource source;
+	public AudioSource bgmusic;
 	private int kills = 0;
 
 	private SpriteRenderer health;
@@ -41,6 +45,8 @@ public class CommandIssuer : MonoBehaviour {
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
+
+		ko = (GameObject)GameObject.Find ("KO_0");
 		
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
@@ -66,14 +72,20 @@ public class CommandIssuer : MonoBehaviour {
 		BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
 		BTN_ON     = Resources.Load <Sprite> ("Sprites/ButtonDown");
 		
-		aPUNCH     = (Resources.Load("Sounds/Punch") as AudioClip);
-		aPUNCH_1     = (Resources.Load("Sounds/Punch1") as AudioClip);
-		aPUNCH_2     = (Resources.Load("Sounds/Punch2") as AudioClip);
-		aKICK     = (Resources.Load("Sounds/Kick") as AudioClip);
+		aPUNCH      = (Resources.Load("Sounds/Punch") as AudioClip);
+		aPUNCH_1    = (Resources.Load("Sounds/Punch1") as AudioClip);
+		aPUNCH_2    = (Resources.Load("Sounds/Punch2") as AudioClip);
+		aKICK       = (Resources.Load("Sounds/Kick") as AudioClip);
 		aKICK_1     = (Resources.Load("Sounds/Kick1") as AudioClip);
 		aWALK_1     = (Resources.Load("Sounds/Walk1") as AudioClip);
-		aWOOSH     = (Resources.Load("Sounds/Woosh") as AudioClip);
+		aWOOSH      = (Resources.Load("Sounds/Woosh") as AudioClip);
+		aGONG       = (Resources.Load("Sounds/gong") as AudioClip);
 
+		
+		mLOW        = (Resources.Load("Sounds/BackgroundMusic_LowHP") as AudioClip);
+		mNORMAL     = (Resources.Load("Sounds/BackgroundMusic_Normal") as AudioClip);
+
+		hideKO ();
 	}
 
 	public void playSound(AudioClip a){
@@ -100,8 +112,18 @@ public class CommandIssuer : MonoBehaviour {
 		this.p = pl;
 		this.sr = p.GetComponent<SpriteRenderer> ();
 		this.source = p.GetComponent<AudioSource> ();
+		bgmusic = (GameObject.Find ("Main Camera")).GetComponent<AudioSource> ();
+		bgmusic.clip = mNORMAL;
+		bgmusic.loop = true;
 	}
-	
+
+	public void showKO(){
+		ko.transform.position = new Vector3 (ko.transform.position.x, ko.transform.position.y, -1);
+	}
+	public void hideKO(){
+		ko.transform.position = new Vector3 (ko.transform.position.x, ko.transform.position.y, 2);
+	}
+
 	void issue(){	
 		bool valid = false;
 		foreach (string s in cmds) {
@@ -114,10 +136,10 @@ public class CommandIssuer : MonoBehaviour {
 			return;
 		if (cmd.len () > 1) {
 			
-			if(cmd.isCmd("rlr") || cmd.isCmd("lrl") && p.punch==0)
+			if(cmd.isCmd("rr") || cmd.isCmd("ll") && p.punch==0)
 				setSprite(KICK_SLIDE);
 
-			if(cmd.isCmd("rr") || cmd.isCmd("ll") && p.punch==0)
+			if(cmd.isCmd("rlr") || cmd.isCmd("lrl") && p.punch==0)
 				setSprite(KICK_FLY);
 
 			p.issueCommand (cmd);
@@ -139,6 +161,8 @@ public class CommandIssuer : MonoBehaviour {
 		if (p.health == 2) {
 			health.sprite = HP2;
 		} else if (p.health == 1) {
+			bgmusic.clip = mLOW;
+			bgmusic.Play();
 			health.sprite = HP1;
 		} else if (p.health == 0) {
 			Destroy (health);

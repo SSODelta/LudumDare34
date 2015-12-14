@@ -78,15 +78,15 @@ public class Player : MonoBehaviour {
 		if (!(punch == 0))
 			return;
 
-		if (cmd.isCmd ("rr"))
+		if (cmd.isCmd ("rlr"))
 			jump (1);
-		if (cmd.isCmd ("ll"))
+		if (cmd.isCmd ("lrl"))
 			jump (-1);
 
-		if(cmd.isCmd("lrl"))
+		if(cmd.isCmd("ll"))
 			startSlide(-1);
 		
-		if(cmd.isCmd("rlr"))
+		if(cmd.isCmd("rr"))
 			startSlide(1);
 
 
@@ -96,6 +96,10 @@ public class Player : MonoBehaviour {
 		DEAD = true;
 		Destroy (GetComponent<BoxCollider2D> ());
 		rb.AddForce (new Vector2 (0, 80));
+		Time.timeScale = 0.35f;
+		ci.bgmusic.Stop ();
+		ci.showKO ();
+		ci.playSound (ci.aGONG);
 	}
 
 	public void retreat(int dx){

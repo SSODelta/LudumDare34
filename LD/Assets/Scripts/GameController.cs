@@ -7,10 +7,13 @@ public class GameController : MonoBehaviour {
 	private int tr = 60;
 	private GameObject ready;
 
+	private CommandIssuer ci;
+
 	// Use this for initialization
 	void Start () {
 		ready = (GameObject)GameObject.Find ("ready");
 		setZ(2);
+		ci = GameObject.Find ("cmds").GetComponent<CommandIssuer> ();
 	}
 
 	void setZ(float z){
@@ -26,6 +29,7 @@ public class GameController : MonoBehaviour {
 			} else {
 				PAUSED = false;
 				Destroy (ready);
+				ci.bgmusic.Play ();
 			}
 		}
 	}
