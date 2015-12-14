@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
 	private void jump(float dx){
 		if (GROUNDED) {
 			ci.playSound(ci.aKICK_1);
-			rb.AddForce (new Vector2 (dx * 120, 675));
+			rb.AddForce (new Vector2 (dx * 120, 1025));
 			GROUNDED = false;
 		}
 	}
@@ -86,6 +86,12 @@ public class Player : MonoBehaviour {
 
 
 	}
+	public void retreat(int dx){
+		
+		GROUNDED = false;
+
+		rb.AddForce (new Vector2 (dx * 800, 300));
+	}
 
 	public void stopSlide(){
 		if (slideCount > 0)
@@ -127,16 +133,21 @@ public class Player : MonoBehaviour {
 			//Kill enemy
 			if(e.transform.position.x >
 			   transform.position.x && attack==1){
-				ci.playSound(ci.aPUNCH_1);
 				e.kill(1);
 			} else if (e.transform.position.x <
 			           transform.position.x && attack == -1) {
 				e.kill(-1);
-			} else if (ci.th==0 && e.attack == 1  && e.transform.position.x < transform.position.x)
-			{
-				ci.hurt(1);
-			}else if (ci.th==0 && e.attack == -1 && e.transform.position.x > transform.position.x){
-				ci.hurt(-1);
+			} else{
+				if (e.attack == 1  && e.transform.position.x < transform.position.x)
+				{
+					e.retreat();
+					retreat(1);
+					if(ci.th==0)ci.hurt(1);
+				}else if (e.attack == -1 && e.transform.position.x > transform.position.x){
+					if(ci.th==0)ci.hurt(-1);
+					e.retreat();
+					retreat(-1);
+				}
 			}
 		}
 

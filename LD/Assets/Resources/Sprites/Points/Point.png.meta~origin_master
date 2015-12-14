@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-guid: fc38cd61415a16946a10c390f363d837
-timeCreated: 1450104003
+guid: 6de217e4615413e46bca8a22d53d5c3d
+timeCreated: 1450101886
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Num1
-    21300002: Num2
-    21300004: Num3
-    21300006: Num4
-    21300008: Num5
+    21300000: Point_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +28,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 64
+  maxTextureSize: 128
   textureSettings:
     filterMode: 0
     aniso: 16
@@ -54,55 +50,15 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Num1
+    - name: Point_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 8
-        width: 2
-        height: 18
-      alignment: 4
-      pivot: {x: 0, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Num2
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 8
-        width: 10
-        height: 18
-      alignment: 4
-      pivot: {x: 0, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Num3
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 8
-        width: 11
-        height: 18
-      alignment: 4
-      pivot: {x: 0, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Num4
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 8
-        width: 10
-        height: 18
-      alignment: 4
-      pivot: {x: 0, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Num5
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 8
-        width: 10
-        height: 18
-      alignment: 4
-      pivot: {x: 0, y: .5}
+        x: 22
+        y: 5
+        width: 70
+        height: 22
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

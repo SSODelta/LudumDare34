@@ -11,6 +11,8 @@ public class CommandIssuer : MonoBehaviour {
 	private int tw = 0, twmax = 13;
 	public  int th = 0;
 
+	private ScoreController sc;
+
 	private SpriteRenderer btnLeft, btnRight;
 
 	private SpriteRenderer sr;
@@ -20,11 +22,17 @@ public class CommandIssuer : MonoBehaviour {
 
 	private string[] cmds;
 	private AudioSource source;
+	private int kills = 0;
 
+	public void newKill(){
+		sc.drawNumber (++kills);
+	}
 
 	// Use this for initialization
 	void Start () {
 
+		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
+		sc.drawNumber (0);
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 
@@ -115,7 +123,6 @@ public class CommandIssuer : MonoBehaviour {
 		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);
-		p.dashSpeed = 0.5f * dx;
 	}
 	private void setAlpha(SpriteRenderer s, float alpha){
 		Color tmp = s.color;

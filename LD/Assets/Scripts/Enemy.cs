@@ -46,11 +46,23 @@ public class Enemy : MonoBehaviour {
 	public void kill(int dx){
 		if (!ALIVE)
 			return;
+		p.ci.playSound(p.ci.aPUNCH_1);
+		p.ci.newKill ();
 		setSprite (HURT_UP);
 		rb.AddForce (new Vector2 (dx * 150, 575));
 		ALIVE = false;
         Destroy(GetComponent<BoxCollider2D>());
     }
+	public void retreat(){
+		
+		GROUNDED = false;
+		setSprite (KICK_UP);
+		
+		int dx = -1;
+		if (transform.localScale.x < 0)
+			dx = 1;
+		rb.AddForce (new Vector2 (dx * 800, 300));
+	}
 
 	private bool isSprite(Sprite s){
 		return sr.sprite.Equals (s);
@@ -120,7 +132,7 @@ public class Enemy : MonoBehaviour {
 			if(!isSprite(DEAD)){
             	setSprite(DEAD);
             	rb.velocity = new Vector2(0,0);
-            	transform.position = new Vector2(transform.position.x, -4.35f-Random.Range(0f,0.15f));
+            	transform.position = new Vector2(transform.position.x, -4.35f-Random.Range(0f,0.25f));
 				rb.gravityScale=0;
 			}
 			return;
