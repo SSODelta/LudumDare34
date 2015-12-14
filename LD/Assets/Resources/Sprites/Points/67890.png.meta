@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e7995b0bf4536fb45b8bde1c8521799f
-timeCreated: 1450092722
+timeCreated: 1450104038
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -42,7 +42,6 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -62,8 +61,8 @@ TextureImporter:
         y: 8
         width: 10
         height: 18
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Num7
       rect:
@@ -72,8 +71,8 @@ TextureImporter:
         y: 8
         width: 10
         height: 18
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Num8
       rect:
@@ -82,8 +81,8 @@ TextureImporter:
         y: 8
         width: 11
         height: 18
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Num9
       rect:
@@ -92,8 +91,8 @@ TextureImporter:
         y: 8
         width: 10
         height: 18
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Num0
       rect:
@@ -102,8 +101,8 @@ TextureImporter:
         y: 8
         width: 9
         height: 18
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
