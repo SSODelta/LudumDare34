@@ -129,7 +129,7 @@ public class Enemy : MonoBehaviour {
         }
         else attack = 0;
 
-		if (DEAD && dist()<1.5 && rb.velocity.y<0 && (isSprite (HURT_DOWN) || isSprite (HURT_DOWN2))) {
+		if (!ALIVE && dist()<1.5 && rb.velocity.y<0 && (isSprite (HURT_DOWN) || isSprite (HURT_DOWN2))) {
 			if((p.attack==1 || p.attack==-1)){
 				setSprite(HURT_UP);
 				rb.AddForce (new Vector2 (0, 575));
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour {
 		if (isSprite (HURT_UP) && rb.velocity.y < 0)
 			setSprite (HURT_DOWN);
 
-		if (isSprite (HURT_DOWN) && rb.velocity.y < -7.5f)
+		if (isSprite (HURT_DOWN) && rb.velocity.y < -6.25f)
 			setSprite (HURT_DOWN2);
 
 		if (!ALIVE)

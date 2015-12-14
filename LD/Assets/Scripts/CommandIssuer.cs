@@ -15,14 +15,15 @@ public class CommandIssuer : MonoBehaviour {
 
 	private ScoreController sc;
 
-	private GameObject ko, black;
+	private GameObject ko, black, menu;
 
-	private SpriteRenderer sr_black;
+	private SpriteRenderer sr_black, sr_menu;
+	private float menuAlpha=0;
 
 	private SpriteRenderer btnLeft, btnRight;
 
 	private float blackAlpha = 1.5f;
-	public bool LOADING = true;
+	public bool LOADING = true, MENU = true;
 
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
@@ -52,9 +53,16 @@ public class CommandIssuer : MonoBehaviour {
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 		rattles = GetComponent<AudioSource> ();
+		
+		menu = (GameObject)GameObject.Find ("menu");
+		Vector3 v = menu.transform.position;
+		v.z = -6;
+		menu.transform.position = v;
+		sr_menu = menu.GetComponent<SpriteRenderer> ();
 
 		black = (GameObject)GameObject.Find ("black");
-		Vector3 v = black.transform.position;
+
+		v = black.transform.position;
 		v.z = -5;
 		black.transform.position = v;
 		sr_black = black.GetComponent<SpriteRenderer> ();
@@ -216,12 +224,31 @@ public class CommandIssuer : MonoBehaviour {
 		s.color = tmp;
 	}
 
+	void hideMenu(){
+		MENU = false;
+		Vector3 v = menu.transform.position;
+		v.z = 90;
+		menu.transform.position = v;
+	}
+
 	// Update is called once per frame
 	void Update () {
+
+		if (MENU && Input.GetKeyUp (KeyCode.LeftArrow))
+			hideMenu ();
+			
+		if (MENU && Input.GetKeyUp (KeyCode.RightArrow))
+			hideMenu ();
+
 		setAlpha (sr_black, blackAlpha);
+		setAlpha (sr_menu,  menuAlpha);
 
 		if (LOADING) {
 			blackAlpha-=0.01f;
+			if(blackAlpha < 0.6f && MENU){
+				menuAlpha +=0.02f;
+				blackAlpha=0.6f;
+			}
 			if(blackAlpha<=0){
 				blackAlpha=0;
 				LOADING=false;
