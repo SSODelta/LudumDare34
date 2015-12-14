@@ -18,14 +18,14 @@ public class CameraController : MonoBehaviour {
 
         if(p.transform.position.x > transform.position.x)
         {
-            dx += 0.01f;
+            dx += 0.025f;
         } else
         {
-            dx -= 0.01f;
+            dx -= 0.025f;
         }
 
-        dx *= 0.775f;
-
+		
+		dx *= 0.7f;
         float newx = transform.position.x + dx;
 
         if (newx < -1.88f) newx = -1.88f;

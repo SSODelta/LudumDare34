@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class Player : MonoBehaviour {
 	private bool GROUNDED = false;
 
 	private int slideCount = 0, attack = 0;
+
+	private HashSet<Enemy> lastEnemy;
 
 	public float dashSpeed = 0;
 	public int punch = 0;
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		lastEnemy = new HashSet<Enemy>();
 		rb = GetComponent<Rigidbody2D>();
 		ci = GameObject.Find ("cmds").GetComponent<CommandIssuer> ();
 		ci.setPlayer (this);
@@ -31,7 +35,7 @@ public class Player : MonoBehaviour {
 	private void jump(float dx){
 		if (GROUNDED) {
 			ci.playSound(ci.aKICK_1);
-			rb.AddForce (new Vector2 (dx * 100, 675));
+			rb.AddForce (new Vector2 (dx * 120, 675));
 			GROUNDED = false;
 		}
 	}
@@ -40,24 +44,18 @@ public class Player : MonoBehaviour {
 		return punch == 0;
 	}
 
+	void OnCollisionExit2D(Collision2D coll){
+		if (coll.collider.name.Contains ("Enemy")) {
+			Enemy e = coll.collider.GetComponent<Enemy>();
+			if(lastEnemy.Contains(e))lastEnemy.Remove(e);
+		}
+	}
+
 	void OnCollisionEnter2D(Collision2D coll) {
 
 		if (coll.collider.name.Contains ("Enemy")) {
-			Enemy e = coll.collider.GetComponent<Enemy>();
+			lastEnemy.Add (coll.collider.GetComponent<Enemy>());
 
-			//Kill enemy
-			if(coll.collider.transform.position.x >
-			   transform.position.x && attack==1){
-				ci.playSound(ci.aPUNCH_1);
-				e.kill(1);
-			} else if (coll.collider.transform.position.x <
-               transform.position.x && attack == -1) {
-				e.kill(-1);
-			} else if ( e.attack == 1  && coll.collider.transform.position.x < transform.position.x ||
-                        e.attack == -1 && coll.collider.transform.position.x > transform.position.x)
-            {
-                ci.hurt();
-            }
 
 		} else if(!GROUNDED) {
             if (punch == 0 && Mathf.Abs(rb.velocity.x) > 0.01)
@@ -100,16 +98,19 @@ public class Player : MonoBehaviour {
 		ci.playSound(ci.aKICK_1);
 		slideCount = 7;
 		ci.setSprite (ci.KICK_SLIDE);
-		dashSpeed = 0.3f * mult;
+		dashSpeed = 0.5f * mult;
 	}
 
 	private const float MAX_SPEED = 6.5f;
-	private const float WALK_SPEED = 0.1f;
+	private const float WALK_SPEED = 0.4f;
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("attack=" + attack);
         attack = dashSpeed==0 ? 0 : Mathf.FloorToInt(Mathf.Sign(dashSpeed));
+		if (punch > 0 && punch < 20)
+			attack = 0;
         if(attack == 0 && ci.isSprite(ci.KICK_FLY)) attack = -Mathf.FloorToInt(Mathf.Sign(transform.localScale.x));
+		if (ci.th > 0)
+			attack = 0;
 
 		if (slideCount > 0)
 			slideCount--;
@@ -119,6 +120,26 @@ public class Player : MonoBehaviour {
 				ci.idle ();
 			}
 		}
+
+
+		foreach(Enemy e in lastEnemy){
+			
+			//Kill enemy
+			if(e.transform.position.x >
+			   transform.position.x && attack==1){
+				ci.playSound(ci.aPUNCH_1);
+				e.kill(1);
+			} else if (e.transform.position.x <
+			           transform.position.x && attack == -1) {
+				e.kill(-1);
+			} else if (ci.th==0 && e.attack == 1  && e.transform.position.x < transform.position.x)
+			{
+				ci.hurt(1);
+			}else if (ci.th==0 && e.attack == -1 && e.transform.position.x > transform.position.x){
+				ci.hurt(-1);
+			}
+		}
+
 		if (dashSpeed == 0) {
 			setBoundingBox(0.18f);
 			if (RIGHT && !ci.isSprite(ci.STAND_2)) {

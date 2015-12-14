@@ -112,14 +112,18 @@ public class Enemy : MonoBehaviour {
         if (isSprite(PUNCH) || isSprite(KICK_DOWN) || isSprite(KICK_UP))
         {
             attack = Mathf.FloorToInt(Mathf.Sign(rb.velocity.x));
+			if(tp>0 && tp<230)attack=0;
         }
         else attack = 0;
 
-        if (transform.position.y < -4.5f) {
-            setSprite(DEAD);
-            rb.velocity = new Vector2(0,0);
-            transform.position = new Vector2(transform.position.x, -4.5f);
-            return;
+        if (transform.position.y < -4.35f) {
+			if(!isSprite(DEAD)){
+            	setSprite(DEAD);
+            	rb.velocity = new Vector2(0,0);
+            	transform.position = new Vector2(transform.position.x, -4.35f-Random.Range(0f,0.15f));
+				rb.gravityScale=0;
+			}
+			return;
         }
 
 		if (isSprite (HURT_UP) && rb.velocity.y < 0)
@@ -138,12 +142,12 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (dist () < 5 && tk == 0 && tp == 0 && GROUNDED) {
-			tk = 300;
+			tk = 450;
 			jump();
 		}
 
 		if (dist () < 3 && tk < 170 && tp == 0 && GROUNDED) {
-			tp = 160;
+			tp = 260;
 			punch ();
 		}
 

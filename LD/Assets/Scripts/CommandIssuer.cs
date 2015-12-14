@@ -9,10 +9,12 @@ public class CommandIssuer : MonoBehaviour {
 
 	private int ts = 0, tsmax = 50;
 	private int tw = 0, twmax = 13;
-	private int th = 0;
+	public  int th = 0;
+
+	private SpriteRenderer btnLeft, btnRight;
 
 	private SpriteRenderer sr;
-	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
+	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 
 	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH;
 
@@ -23,6 +25,8 @@ public class CommandIssuer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
+		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
@@ -39,6 +43,9 @@ public class CommandIssuer : MonoBehaviour {
 		WALK4      = Resources.Load <Sprite> ("Sprites/Walk4_1");
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
+
+		BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
+		BTN_ON     = Resources.Load <Sprite> ("Sprites/ButtonDown");
 
 		aPUNCH     = (Resources.Load("Sounds/Punch") as AudioClip);
 		aPUNCH_1     = (Resources.Load("Sounds/Punch1") as AudioClip);
@@ -104,17 +111,26 @@ public class CommandIssuer : MonoBehaviour {
 		p.dashSpeed = 0;
 	}
 
-	public void hurt(){
+	public void hurt(int dx){
 		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);
+		p.dashSpeed = 0.5f * dx;
+	}
+	private void setAlpha(SpriteRenderer s, float alpha){
+		Color tmp = s.color;
+		tmp.a = alpha;
+		s.color = tmp;
 	}
 
 	// Update is called once per frame
 	void Update () {
 
 		if (th > 0) {
+			p.LEFT = false;
+			p.RIGHT = false;
 			th--;
+			setSprite (HURT);
 			return;
 		}
 
@@ -153,6 +169,23 @@ public class CommandIssuer : MonoBehaviour {
 			} else if(isSprite(WALK6)){
 				setSprite (STAND_1);
 			}
+		}
+
+		if (p.LEFT) {
+			btnLeft.sprite = BTN_ON;
+			setAlpha (btnLeft, 1);
+		} else {
+			btnLeft.sprite = BTN_OFF;
+			setAlpha (btnLeft, 0.5f);
+		}
+
+		
+		if (p.RIGHT) {
+			btnRight.sprite = BTN_ON;
+			setAlpha (btnRight, 1);
+		} else {
+			btnRight.sprite = BTN_OFF;
+			setAlpha (btnRight, 0.5f);
 		}
 
 		if (p == null)
@@ -194,8 +227,6 @@ public class CommandIssuer : MonoBehaviour {
 				p.stopSlide();
 		}
 
-		if (Input.GetKeyUp (KeyCode.K))
-			hurt ();
 		issue ();
 	}
 	
