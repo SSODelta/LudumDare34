@@ -7,6 +7,8 @@ public class ScoreController : MonoBehaviour {
 
 	private HashSet<GameObject> list = null;
 
+	public int ax = 0;
+
 	private Sprite NUM_0, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9;
 
 	// Use this for initialization
@@ -43,6 +45,10 @@ public class ScoreController : MonoBehaviour {
 	
 	}
 
+	public bool empty(){
+		return list.Count == 0;
+	}
+
 	private const float offset = 2.45f;
 	public void drawNumber(int num){
 		erase ();
@@ -50,7 +56,18 @@ public class ScoreController : MonoBehaviour {
 		printLetters (s, transform.position.x+offset, transform.position.y);
 	}
 
-	private void erase(){
+	public void setAlpha(float alpha){
+		foreach (GameObject go in list) {
+			
+			SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+
+			Color c = sr.color;
+			c.a = alpha;
+			sr.color = c;
+		}
+	}
+
+	public void erase(){
 		foreach(GameObject go in list){
 			Destroy(go);
 		}
@@ -60,10 +77,11 @@ public class ScoreController : MonoBehaviour {
 		GameObject go = (GameObject)(GameObject)Instantiate (Resources.Load ("Num"));
 		SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
 		sr.sprite = s;
-		go.transform.position = new Vector2 (x,y);
+		go.transform.position = new Vector3 (x, y, -7*ax);
 		list.Add (go);
-		go.transform.localScale = new Vector3 (5f, 5f, 0);
+		go.transform.localScale = new Vector3 (5f, 5f, 1);
 		go.transform.parent = transform;
+
 	}
 
 	private const float margin = 0.06f;

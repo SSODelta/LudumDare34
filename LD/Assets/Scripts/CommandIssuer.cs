@@ -13,7 +13,9 @@ public class CommandIssuer : MonoBehaviour {
 	private int tw = 0, twmax = 13;
 	public  int th = 0;
 
-	private ScoreController sc;
+	private static int LAST_SCORE = 0;
+
+	private ScoreController sc, sc_menu;
 
 	private GameObject ko, black, menu;
 
@@ -46,19 +48,28 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		GameObject go_scmenu = GameObject.Find ("scMenu");
 		Time.timeScale = 1f;
 		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
+		sc_menu = go_scmenu.GetComponent<ScoreController> ();
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 		rattles = GetComponent<AudioSource> ();
-		
+
+		sc_menu.ax = 1;
+
 		menu = (GameObject)GameObject.Find ("menu");
 		Vector3 v = menu.transform.position;
 		v.z = -6;
 		menu.transform.position = v;
 		sr_menu = menu.GetComponent<SpriteRenderer> ();
+
+		 v = go_scmenu.transform.position;
+		v.z = 7;
+		go_scmenu.transform.position = v;
 
 		black = (GameObject)GameObject.Find ("black");
 
@@ -205,6 +216,7 @@ public class CommandIssuer : MonoBehaviour {
 		th = 45;
 		setSprite (HURT);
 		if (--p.health == 0) {
+			LAST_SCORE = kills;
 			p.kill ();
 			Destroy (health);
 		}
@@ -226,6 +238,7 @@ public class CommandIssuer : MonoBehaviour {
 
 	void hideMenu(){
 		MENU = false;
+		sc_menu.erase ();
 		Vector3 v = menu.transform.position;
 		v.z = 90;
 		menu.transform.position = v;
@@ -234,11 +247,14 @@ public class CommandIssuer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (MENU && Input.GetKeyUp (KeyCode.LeftArrow))
+		if (MENU && Input.GetKeyUp (KeyCode.LeftArrow)) {
 			hideMenu ();
-			
-		if (MENU && Input.GetKeyUp (KeyCode.RightArrow))
+			gc.HARD=false;
+		}
+		if (MENU && Input.GetKeyUp (KeyCode.RightArrow)) {
 			hideMenu ();
+			gc.HARD=true;
+		}
 
 		setAlpha (sr_black, blackAlpha);
 		setAlpha (sr_menu,  menuAlpha);
@@ -248,6 +264,11 @@ public class CommandIssuer : MonoBehaviour {
 			if(blackAlpha < 0.6f && MENU){
 				menuAlpha +=0.02f;
 				blackAlpha=0.6f;
+				sc_menu.setAlpha(menuAlpha);
+				if(sc_menu.empty()){
+					sc_menu.drawNumber(LAST_SCORE);
+					sc_menu.setAlpha(0f);
+				}
 			}
 			if(blackAlpha<=0){
 				blackAlpha=0;

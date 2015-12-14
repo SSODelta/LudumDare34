@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(!gc.PAUSED && Mathf.FloorToInt(Random.Range(0,500))==1)spawnEnemy();
+		if(!gc.PAUSED && Mathf.FloorToInt(Random.Range(0,gc.HARD ? 85 : 250))==1)spawnEnemy();
 	}
 
 	public void spawnEnemy(){

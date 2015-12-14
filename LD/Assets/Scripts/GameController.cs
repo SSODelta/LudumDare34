@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour {
 	private int tr = 60;
 	private GameObject ready;
 
+	public bool HARD = false;
+
 	private CommandIssuer ci;
 
 	// Use this for initialization
