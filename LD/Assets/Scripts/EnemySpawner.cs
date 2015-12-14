@@ -4,14 +4,17 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
 
+	private GameController gc;
+
 	// Use this for initialization
 	void Start () {
-		spawnEnemy ();
+		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Mathf.FloorToInt(Random.Range(0,500))==1)spawnEnemy();
+
+		if(!gc.PAUSED && Mathf.FloorToInt(Random.Range(0,500))==1)spawnEnemy();
 	}
 
 	public void spawnEnemy(){

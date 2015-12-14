@@ -7,6 +7,8 @@ public class CommandIssuer : MonoBehaviour {
 	private Player p;
 	private Command cmd;
 
+	private GameController gc;
+
 	private int ts = 0, tsmax = 50;
 	private int tw = 0, twmax = 13;
 	public  int th = 0;
@@ -33,6 +35,8 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
+		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
@@ -149,6 +153,9 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		if (gc.PAUSED)
+			return;
 
 		if (th > 0) {
 			p.LEFT = false;
