@@ -15,9 +15,14 @@ public class CommandIssuer : MonoBehaviour {
 
 	private ScoreController sc;
 
-	private GameObject ko;
+	private GameObject ko, black;
+
+	private SpriteRenderer sr_black;
 
 	private SpriteRenderer btnLeft, btnRight;
+
+	private float blackAlpha = 1.5f;
+	public bool LOADING = true;
 
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
@@ -47,6 +52,12 @@ public class CommandIssuer : MonoBehaviour {
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 		rattles = GetComponent<AudioSource> ();
+
+		black = (GameObject)GameObject.Find ("black");
+		Vector3 v = black.transform.position;
+		v.z = -5;
+		black.transform.position = v;
+		sr_black = black.GetComponent<SpriteRenderer> ();
 
 		ko = (GameObject)GameObject.Find ("KO_0");
 		
@@ -185,17 +196,18 @@ public class CommandIssuer : MonoBehaviour {
 		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);
-		if (--p.health == 0)
+		if (--p.health == 0) {
 			p.kill ();
+			Destroy (health);
+		}
+
 		if (p.health == 2) {
 			health.sprite = HP2;
 		} else if (p.health == 1) {
 			bgmusic.clip = mLOW;
 			bgmusic.Play();
 			health.sprite = HP1;
-		} else if (p.health == 0) {
-			Destroy (health);
-		}
+		} 
 
 	}
 	private void setAlpha(SpriteRenderer s, float alpha){
@@ -206,7 +218,23 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		setAlpha (sr_black, blackAlpha);
 
+		if (LOADING) {
+			blackAlpha-=0.01f;
+			if(blackAlpha<=0){
+				blackAlpha=0;
+				LOADING=false;
+			}
+		}
+
+		if (p.DEAD) {
+			blackAlpha += 0.0045f;
+			if(blackAlpha>1.4)
+				Application.LoadLevel(0);
+		}
+
+	
 		if (gc.PAUSED)
 			return;
 

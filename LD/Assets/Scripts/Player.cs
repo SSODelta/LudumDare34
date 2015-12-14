@@ -99,7 +99,8 @@ public class Player : MonoBehaviour {
 		Time.timeScale = 0.35f;
 		ci.bgmusic.Stop ();
 		ci.showKO ();
-		ci.playSound (ci.aGONG);
+		ci.bgmusic.loop = false;
+		ci.playSound (ci.aGONG, ci.bgmusic);
 	}
 
 	public void retreat(int dx){

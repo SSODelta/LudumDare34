@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (--tr == 0) {
+		if (!ci.LOADING && --tr == 0) {
 			if(ready.transform.position.z>0){
 				setZ(-1);
 				tr = 100;
