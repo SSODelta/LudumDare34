@@ -16,16 +16,20 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Mathf.Abs (p.transform.position.x - transform.position.x) > 1f) {
-			dx += (p.transform.position.x - transform.position.x) / 20f;
-		}
+        if(p.transform.position.x > transform.position.x)
+        {
+            dx += 0.025f;
+        } else
+        {
+            dx -= 0.025f;
+        }
+
 		
 		dx *= 0.7f;
-
         float newx = transform.position.x + dx;
 
-        if (newx < -1.25f) newx = -1.25f;
-        if (newx >  8.30f) newx = 8.30f;
+        if (newx < -1.88f) newx = -1.88f;
+        if (newx >  8.85f) newx = 8.85f;
 
         transform.position = new Vector3(newx,
                                          transform.position.y,
