@@ -50,7 +50,8 @@ public class Player : MonoBehaviour {
 			   transform.position.x && attack==1){
 				ci.playSound(ci.aPUNCH_1);
 				e.kill(1);
-			} else if (attack == -1) {
+			} else if (coll.collider.transform.position.x <
+               transform.position.x && attack == -1) {
 				e.kill(-1);
 			} else if ( e.attack == 1  && coll.collider.transform.position.x < transform.position.x ||
                         e.attack == -1 && coll.collider.transform.position.x > transform.position.x)
@@ -61,8 +62,9 @@ public class Player : MonoBehaviour {
 		} else if(!GROUNDED) {
             if (punch == 0 && Mathf.Abs(rb.velocity.x) > 0.01)
                 startSlide(RIGHT ? 1 : -1);
+            else
+                ci.setSprite(ci.STAND_1);
             GROUNDED = true;
-            ci.setSprite(ci.STAND_1);
         }
 		
 
@@ -105,7 +107,7 @@ public class Player : MonoBehaviour {
 	private const float WALK_SPEED = 0.1f;
 	// Update is called once per frame
 	void Update () {
-
+        Debug.Log("attack=" + attack);
         attack = dashSpeed==0 ? 0 : Mathf.FloorToInt(Mathf.Sign(dashSpeed));
         if(attack == 0 && ci.isSprite(ci.KICK_FLY)) attack = -Mathf.FloorToInt(Mathf.Sign(transform.localScale.x));
 

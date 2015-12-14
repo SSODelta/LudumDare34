@@ -26,7 +26,12 @@ public class CameraController : MonoBehaviour {
 
         dx *= 0.775f;
 
-        transform.position = new Vector3(transform.position.x + dx,
+        float newx = transform.position.x + dx;
+
+        if (newx < -1.88f) newx = -1.88f;
+        if (newx >  8.85f) newx = 8.85f;
+
+        transform.position = new Vector3(newx,
                                          transform.position.y,
                                          transform.position.z);
 	}

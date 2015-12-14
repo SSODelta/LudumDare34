@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour {
 
 			if(isSprite(RUN1)){
 				setSprite(RUN2);
-				tamax+=5;
+				tamax=10;
 			} else if(isSprite(RUN2)){
 				setSprite(RUN3);
 				tamax-=5;
