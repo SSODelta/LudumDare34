@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour {
 	private int ta = 0, tamax = 10;
 	private int tk = 0, tp = 0;
 
+    public int attack = 0;
+
 	private bool GROUNDED = false, ALIVE =true;
 
 	private Rigidbody2D rb;
@@ -47,7 +49,8 @@ public class Enemy : MonoBehaviour {
 		setSprite (HURT_UP);
 		rb.AddForce (new Vector2 (dx * 150, 575));
 		ALIVE = false;
-	}
+        Destroy(GetComponent<BoxCollider2D>());
+    }
 
 	private bool isSprite(Sprite s){
 		return sr.sprite.Equals (s);
@@ -96,22 +99,34 @@ public class Enemy : MonoBehaviour {
 		if (ALIVE) {
 			setSprite (RUN1);
 		} else {
+            Debug.Log("deaded him");
 			setSprite(DEAD);
-		}
+
+        }
 	}
 
 	private const float MAX_SPEED = 5;
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update() {
+
+        if (isSprite(PUNCH) || isSprite(KICK_DOWN) || isSprite(KICK_UP))
+        {
+            attack = Mathf.FloorToInt(Mathf.Sign(rb.velocity.x));
+        }
+        else attack = 0;
+
+        if (transform.position.y < -4.5f) {
+            setSprite(DEAD);
+            rb.velocity = new Vector2(0,0);
+            transform.position = new Vector2(transform.position.x, -4.5f);
+            return;
+        }
 
 		if (isSprite (HURT_UP) && rb.velocity.y < 0)
 			setSprite (HURT_DOWN);
 
 		if (!ALIVE)
 			return;
-
-		if (isSprite (KICK_UP) && rb.velocity.y < 0)
-			setSprite (KICK_DOWN);
 
 		if (tk > 0)
 			tk--;
@@ -154,8 +169,7 @@ public class Enemy : MonoBehaviour {
 
 		}
 
-
-
+        if (rb == null) return;
 		if(rb.velocity.magnitude > MAX_SPEED)
 			rb.velocity *= MAX_SPEED / rb.velocity.magnitude;
 

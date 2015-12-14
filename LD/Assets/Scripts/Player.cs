@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
 	public  CommandIssuer ci;
 	private bool GROUNDED = false;
 
-	private int slideCount = 0;
+	private int slideCount = 0, attack = 0;
 
 	public float dashSpeed = 0;
 	public int punch = 0;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 	private void jump(float dx){
 		if (GROUNDED) {
 			ci.playSound(ci.aKICK_1);
-			rb.AddForce (new Vector2 (dx * 100, 425));
+			rb.AddForce (new Vector2 (dx * 100, 675));
 			GROUNDED = false;
 		}
 	}
@@ -47,19 +47,24 @@ public class Player : MonoBehaviour {
 
 			//Kill enemy
 			if(coll.collider.transform.position.x >
-			   transform.position.x){
+			   transform.position.x && attack==1){
 				ci.playSound(ci.aPUNCH_1);
 				e.kill(1);
-			} else {
+			} else if (attack == -1) {
 				e.kill(-1);
-			}
+			} else if ( e.attack == 1  && coll.collider.transform.position.x < transform.position.x ||
+                        e.attack == -1 && coll.collider.transform.position.x > transform.position.x)
+            {
+                ci.hurt();
+            }
 
-		}
-
-        if (GROUNDED) return;
-		if (punch==0 && Mathf.Abs(rb.velocity.x) > 0.01)
-			 startSlide (RIGHT ? 1 : -1);
-		GROUNDED = true;
+		} else if(!GROUNDED) {
+            if (punch == 0 && Mathf.Abs(rb.velocity.x) > 0.01)
+                startSlide(RIGHT ? 1 : -1);
+            GROUNDED = true;
+            ci.setSprite(ci.STAND_1);
+        }
+		
 
 	}
 
@@ -100,6 +105,10 @@ public class Player : MonoBehaviour {
 	private const float WALK_SPEED = 0.1f;
 	// Update is called once per frame
 	void Update () {
+
+        attack = dashSpeed==0 ? 0 : Mathf.FloorToInt(Mathf.Sign(dashSpeed));
+        if(attack == 0 && ci.isSprite(ci.KICK_FLY)) attack = -Mathf.FloorToInt(Mathf.Sign(transform.localScale.x));
+
 		if (slideCount > 0)
 			slideCount--;
 		if (punch > 0) {
