@@ -23,12 +23,13 @@ public class CommandIssuer : MonoBehaviour {
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 	public Sprite HP3, HP2, HP1;
 
-	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG;
+	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
 	public AudioClip mLOW, mNORMAL;
+	public AudioClip aD1, aD2, aD3, aD4, aD5, aD6, aD7;  
 
 	private string[] cmds;
 	private AudioSource source;
-	public AudioSource bgmusic;
+	public AudioSource bgmusic, rattles;
 	private int kills = 0;
 
 	private SpriteRenderer health;
@@ -45,6 +46,7 @@ public class CommandIssuer : MonoBehaviour {
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
+		rattles = GetComponent<AudioSource> ();
 
 		ko = (GameObject)GameObject.Find ("KO_0");
 		
@@ -80,7 +82,17 @@ public class CommandIssuer : MonoBehaviour {
 		aWALK_1     = (Resources.Load("Sounds/Walk1") as AudioClip);
 		aWOOSH      = (Resources.Load("Sounds/Woosh") as AudioClip);
 		aGONG       = (Resources.Load("Sounds/gong") as AudioClip);
+		aREADY      = (Resources.Load("Sounds/READY") as AudioClip);
+		aSPLAT      = (Resources.Load("Sounds/Splat") as AudioClip);
+		aOW         = (Resources.Load("Sounds/Oww") as AudioClip);
 
+		aD1 = Resources.Load<AudioClip> ("Sounds/Death1");
+		aD2 = Resources.Load<AudioClip> ("Sounds/Death2");
+		aD3 = Resources.Load<AudioClip> ("Sounds/Death3");
+		aD4 = Resources.Load<AudioClip> ("Sounds/Death4");
+		aD5 = Resources.Load<AudioClip> ("Sounds/Death5");
+		aD6 = Resources.Load<AudioClip> ("Sounds/Death6");
+		aD7 = Resources.Load<AudioClip> ("Sounds/Death7");
 		
 		mLOW        = (Resources.Load("Sounds/BackgroundMusic_LowHP") as AudioClip);
 		mNORMAL     = (Resources.Load("Sounds/BackgroundMusic_Normal") as AudioClip);
@@ -88,9 +100,25 @@ public class CommandIssuer : MonoBehaviour {
 		hideKO ();
 	}
 
+	public void playDeathRattle(){
+		int i = Random.Range (0, 6);
+
+		if (i == 0) playSound (aD1, rattles);
+		if (i == 1) playSound (aD2, rattles);
+		if (i == 2) playSound (aD3, rattles);
+		if (i == 3) playSound (aD4, rattles);
+		if (i == 4) playSound (aD5, rattles);
+		if (i == 5) playSound (aD6, rattles);
+		if (i == 6) playSound (aD7, rattles);
+	}
+
 	public void playSound(AudioClip a){
-		source.clip = a;
-		source.Play ();
+		playSound (a, source);
+	}
+
+	public void playSound(AudioClip a, AudioSource src){
+		src.clip = a;
+		src.Play ();
 	}
 
 	public bool isSprite(Sprite s){
@@ -153,6 +181,7 @@ public class CommandIssuer : MonoBehaviour {
 	}
 
 	public void hurt(int dx){
+		playSound(aOW, rattles);
 		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);

@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour {
 			return;
 		p.ci.playSound(p.ci.aPUNCH_1);
 		p.ci.newKill ();
+		p.ci.playDeathRattle ();
 		setSprite (HURT_UP);
 		rb.AddForce (new Vector2 (dx * 150, 575));
 		ALIVE = false;
@@ -134,6 +135,7 @@ public class Enemy : MonoBehaviour {
             	rb.velocity = new Vector2(0,0);
             	transform.position = new Vector2(transform.position.x, -4.35f-Random.Range(0f,0.25f));
 				rb.gravityScale=0;
+				p.ci.playSound(p.ci.aSPLAT);
 			}
 			return;
         }

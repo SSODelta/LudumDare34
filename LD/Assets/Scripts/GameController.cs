@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour {
 			if(ready.transform.position.z>0){
 				setZ(-1);
 				tr = 100;
+				ci.playSound(ci.aREADY);
 			} else {
 				PAUSED = false;
 				Destroy (ready);
