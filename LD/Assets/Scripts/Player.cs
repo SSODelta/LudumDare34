@@ -137,7 +137,7 @@ public class Player : MonoBehaviour {
 			if (transform.position.y < -4.15f) {
 				if(rb.gravityScale!=0){
 					rb.velocity = new Vector2(0,0);
-					transform.position = new Vector2(transform.position.x, -4.15f-Random.Range(0f,0.25f));
+					transform.position = new Vector2(transform.position.x, -4.15f-Random.Range(0f,0.35f));
 					rb.gravityScale=0;
 				}
 				return;
