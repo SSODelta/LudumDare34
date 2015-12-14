@@ -17,12 +17,15 @@ public class CommandIssuer : MonoBehaviour {
 
 	private SpriteRenderer sr;
 	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
+	public Sprite HP3, HP2, HP1;
 
 	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH;
 
 	private string[] cmds;
 	private AudioSource source;
 	private int kills = 0;
+
+	private SpriteRenderer health;
 
 	public void newKill(){
 		sc.drawNumber (++kills);
@@ -32,7 +35,7 @@ public class CommandIssuer : MonoBehaviour {
 	void Start () {
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
-		
+		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
 		
 		cmd = new Command ();
@@ -51,7 +54,11 @@ public class CommandIssuer : MonoBehaviour {
 		WALK4      = Resources.Load <Sprite> ("Sprites/Walk4_1");
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
-		
+
+		HP1 = Resources.Load<Sprite> ("Sprites/HP/1_HP");
+		HP2 = Resources.Load<Sprite> ("Sprites/HP/2_HP");
+		HP3 = Resources.Load<Sprite> ("Sprites/HP/3_HP");
+
 		BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
 		BTN_ON     = Resources.Load <Sprite> ("Sprites/ButtonDown");
 		
@@ -125,6 +132,14 @@ public class CommandIssuer : MonoBehaviour {
 		setSprite (HURT);
 		if (--p.health == 0)
 			p.kill ();
+		if (p.health == 2) {
+			health.sprite = HP2;
+		} else if (p.health == 1) {
+			health.sprite = HP1;
+		} else if (p.health == 0) {
+			Destroy (health);
+		}
+
 	}
 	private void setAlpha(SpriteRenderer s, float alpha){
 		Color tmp = s.color;
