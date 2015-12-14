@@ -43,7 +43,7 @@ public class ScoreController : MonoBehaviour {
 	
 	}
 
-	private const float offset = 2.2f;
+	private const float offset = 2.45f;
 	public void drawNumber(int num){
 		erase ();
 		string s = "" + num;

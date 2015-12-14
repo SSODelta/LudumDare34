@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 	public bool DEAD = false;
 
 	public int health = 3;
-	private int slideCount = 0, attack = 0;
+	public int slideCount = 0, attack = 0;
 
 	private HashSet<Enemy> lastEnemy;
 

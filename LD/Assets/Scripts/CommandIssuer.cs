@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CommandIssuer : MonoBehaviour {
 
-	private int t = 0, tmax = 12;
+	private int t = 0, tmax = 20;
 	private Player p;
 	private Command cmd;
 
@@ -45,7 +45,7 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		Time.timeScale = 1f;
 		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();

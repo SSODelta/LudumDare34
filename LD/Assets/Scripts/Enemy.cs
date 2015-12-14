@@ -113,7 +113,6 @@ public class Enemy : MonoBehaviour {
 		if (ALIVE) {
 			setSprite (RUN1);
 		} else {
-            Debug.Log("deaded him");
 			setSprite(DEAD);
 
         }
@@ -129,6 +128,14 @@ public class Enemy : MonoBehaviour {
 			if(tp>0 && tp<230)attack=0;
         }
         else attack = 0;
+
+		if (DEAD && dist()<1.5 && rb.velocity.y<0 && (isSprite (HURT_DOWN) || isSprite (HURT_DOWN2))) {
+			if((p.attack==1 || p.attack==-1)){
+				setSprite(HURT_UP);
+				rb.AddForce (new Vector2 (0, 575));
+				p.ci.playSound(p.ci.aKICK);
+			}
+		}
 
         if (transform.position.y < -4.35f) {
 			if(!isSprite(DEAD)){
