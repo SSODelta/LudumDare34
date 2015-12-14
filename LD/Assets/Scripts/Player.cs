@@ -28,8 +28,11 @@ public class Player : MonoBehaviour {
 		lastEnemy = new HashSet<Enemy>();
 		rb = GetComponent<Rigidbody2D>();
 		ci = GameObject.Find ("cmds").GetComponent<CommandIssuer> ();
+
 		ci.setPlayer (this);
 		col = this.GetComponent<BoxCollider2D> ();
+
+
 	}
 
 	private void jump(float dx){

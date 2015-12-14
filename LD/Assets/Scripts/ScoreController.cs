@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class ScoreController : MonoBehaviour {
 
-	private HashSet<GameObject> list;
+	private HashSet<GameObject> list = null;
 
 	private Sprite NUM_0, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9;
 
@@ -46,7 +47,6 @@ public class ScoreController : MonoBehaviour {
 	public void drawNumber(int num){
 		erase ();
 		string s = "" + num;
-		Debug.Log ("Drawing s="+s);
 		printLetters (s, transform.position.x+offset, transform.position.y);
 	}
 

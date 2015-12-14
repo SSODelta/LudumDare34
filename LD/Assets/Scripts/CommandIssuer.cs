@@ -30,12 +30,11 @@ public class CommandIssuer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
-		sc.drawNumber (0);
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
+		
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
-
+		
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
 
@@ -51,10 +50,10 @@ public class CommandIssuer : MonoBehaviour {
 		WALK4      = Resources.Load <Sprite> ("Sprites/Walk4_1");
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
-
+		
 		BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
 		BTN_ON     = Resources.Load <Sprite> ("Sprites/ButtonDown");
-
+		
 		aPUNCH     = (Resources.Load("Sounds/Punch") as AudioClip);
 		aPUNCH_1     = (Resources.Load("Sounds/Punch1") as AudioClip);
 		aPUNCH_2     = (Resources.Load("Sounds/Punch2") as AudioClip);
