@@ -16,7 +16,7 @@ public class CommandIssuer : MonoBehaviour {
 	private SpriteRenderer btnLeft, btnRight;
 
 	private SpriteRenderer sr;
-	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
+	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 
 	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH;
 
@@ -43,6 +43,7 @@ public class CommandIssuer : MonoBehaviour {
 		KICK_FLY   = Resources.Load <Sprite> ("Sprites/FlyingKick");
 		KICK_SLIDE = Resources.Load <Sprite> ("Sprites/SlideKick");
 		PUNCH      = Resources.Load <Sprite> ("Sprites/FistPunch");
+		DEAD       = Resources.Load <Sprite> ("Sprites/Dead");
 		HURT       = Resources.Load <Sprite> ("Sprites/Hurt");
 		WALK1      = Resources.Load <Sprite> ("Sprites/Walk1_1");
 		WALK2      = Resources.Load <Sprite> ("Sprites/Walk2_1");
@@ -122,6 +123,8 @@ public class CommandIssuer : MonoBehaviour {
 		playSound (aPUNCH_1);
 		th = 45;
 		setSprite (HURT);
+		if (--p.health == 0)
+			p.kill ();
 	}
 	private void setAlpha(SpriteRenderer s, float alpha){
 		Color tmp = s.color;

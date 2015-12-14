@@ -9,7 +9,9 @@ public class Player : MonoBehaviour {
 
 	public  CommandIssuer ci;
 	private bool GROUNDED = false;
+	public bool DEAD = false;
 
+	public int health = 3;
 	private int slideCount = 0, attack = 0;
 
 	private HashSet<Enemy> lastEnemy;
@@ -89,11 +91,18 @@ public class Player : MonoBehaviour {
 
 
 	}
+
+	public void kill(){
+		DEAD = true;
+		Destroy (GetComponent<BoxCollider2D> ());
+		rb.AddForce (new Vector2 (0, 80));
+	}
+
 	public void retreat(int dx){
 		
 		GROUNDED = false;
 
-		rb.AddForce (new Vector2 (dx * 800, 300));
+		rb.AddForce (new Vector2 (dx * 500, 300));
 	}
 
 	public void stopSlide(){
@@ -114,6 +123,31 @@ public class Player : MonoBehaviour {
 	private const float WALK_SPEED = 0.4f;
 	// Update is called once per frame
 	void Update () {
+		if (DEAD) {
+			if(rb.velocity.y < 0 || rb.gravityScale==0)
+				ci.setSprite(ci.DEAD);
+			else ci.setSprite(ci.HURT);
+
+			if (transform.position.y < -4.15f) {
+				if(rb.gravityScale!=0){
+					rb.velocity = new Vector2(0,0);
+					transform.position = new Vector2(transform.position.x, -4.15f-Random.Range(0f,0.25f));
+					rb.gravityScale=0;
+				}
+				return;
+			}
+
+			if(rb.velocity.x<0)
+				transform.localScale = new Vector3(-10,10,1);
+			else
+				transform.localScale = new Vector3(10,10,1);
+
+			if(transform.position.x < -10.8 || transform.position.x > 17.66)
+				rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
+
+			return;
+
+		}
         attack = dashSpeed==0 ? 0 : Mathf.FloorToInt(Mathf.Sign(dashSpeed));
 		if (punch > 0 && punch < 20)
 			attack = 0;
