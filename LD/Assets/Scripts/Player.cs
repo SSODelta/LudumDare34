@@ -146,7 +146,7 @@ public class Player : MonoBehaviour {
 				transform.position = new Vector3(-10.7f, transform.position.y, transform.position.z);
 				rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
 			} else if(transform.position.x > 17.66){
-				transform.position = new Vector3(10.6f, transform.position.y, transform.position.z);
+				transform.position = new Vector3(17.6f, transform.position.y, transform.position.z);
 				rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
 			}
 
