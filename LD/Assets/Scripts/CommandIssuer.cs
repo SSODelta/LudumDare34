@@ -30,7 +30,7 @@ public class CommandIssuer : MonoBehaviour {
 	private float blackAlpha = 1.5f;
 	public bool LOADING = true, MENU = true;
 
-	private SpriteRenderer sr;
+	private SpriteRenderer sr, sr_credits;
 	public Sprite NEW_MENU, BTN_OFF, BTN_ON;
 
     public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
@@ -58,6 +58,8 @@ public class CommandIssuer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        Camera.main.aspect = 2.25f;
+
         if (LAST_SCORE >= 10) PROGRESS = Mathf.Max(1, PROGRESS);
         if (LAST_SCORE >= 25) PROGRESS = Mathf.Max(2, PROGRESS);
         if (LAST_SCORE >= 55) PROGRESS = Mathf.Max(3, PROGRESS);
@@ -65,14 +67,16 @@ public class CommandIssuer : MonoBehaviour {
         headband = PROGRESS;
 
         GameObject go_scmenu = GameObject.Find ("scMenu");
-		Time.timeScale = 1f;
+        Time.timeScale = 1f;
 		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
 		sc_menu = go_scmenu.GetComponent<ScoreController> ();
 		btnLeft  = GameObject.Find ("btnLeft").GetComponent<SpriteRenderer> ();
 		health = GameObject.Find ("health").GetComponent<SpriteRenderer> ();
 		btnRight = GameObject.Find ("btnRight").GetComponent<SpriteRenderer> ();
-		rattles = GetComponent<AudioSource> ();
+        sr_credits = GameObject.Find("Credits").GetComponent<SpriteRenderer>();
+        setAlpha(sr_credits, 0f);
+        rattles = GetComponent<AudioSource> ();
 
 		sc_menu.ax = 1;
 
@@ -412,7 +416,8 @@ public class CommandIssuer : MonoBehaviour {
 				menuAlpha +=0.02f;
 				blackAlpha=0.6f;
 				sc_menu.setAlpha(menuAlpha);
-				if(sc_menu.empty() && !sr_menu.sprite.Equals(NEW_MENU))
+                setAlpha(sr_credits,menuAlpha);
+                if (sc_menu.empty() && !sr_menu.sprite.Equals(NEW_MENU))
                 {
                     sc_menu.setAlpha(0f);
                     if (LAST_SCORE != 0)
