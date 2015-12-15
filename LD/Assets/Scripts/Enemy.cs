@@ -214,10 +214,10 @@ public class Enemy : MonoBehaviour {
 		} else {
 
 			if (p.transform.position.x > rb.position.x) {
-				rb.AddForce (new Vector2 (10, 0));
+				rb.AddForce (new Vector2 (p.ci.gc.HARD ? 10 : 6, 0));
 				transform.localScale = new Vector3(10,10,1);
 			} else {
-				rb.AddForce (new Vector2(-10,0));
+				rb.AddForce (new Vector2(p.ci.gc.HARD ? -10 : -6, 0));
 				transform.localScale = new Vector3(-10,10,1);
 			}
 		
