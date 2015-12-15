@@ -16,7 +16,7 @@ public class CommandIssuer : MonoBehaviour {
     private int headband = 0;
 
 	private static int LAST_SCORE = 0;
-    private static int PROGRESS = 0;
+    private static int PROGRESS = 2;
 
 	private ScoreController sc, sc_menu;
 
@@ -62,6 +62,7 @@ public class CommandIssuer : MonoBehaviour {
         if (LAST_SCORE >= 25) PROGRESS = Mathf.Max(2, PROGRESS);
         if (LAST_SCORE >= 55) PROGRESS = Mathf.Max(3, PROGRESS);
 
+        headband = PROGRESS;
 
         GameObject go_scmenu = GameObject.Find ("scMenu");
 		Time.timeScale = 1f;
@@ -382,7 +383,9 @@ public class CommandIssuer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (MENU && Input.GetKeyUp (KeyCode.LeftArrow)) {
+        giveHeadband();
+
+        if (MENU && Input.GetKeyUp (KeyCode.LeftArrow)) {
 			hideMenu ();
 			gc.HARD=false;
             playSound(aSTART);
