@@ -383,6 +383,9 @@ public class CommandIssuer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (Input.GetKeyUp(KeyCode.Escape))
+            Application.Quit();
+
         giveHeadband();
 
         if (MENU && Input.GetKeyUp (KeyCode.LeftArrow)) {
