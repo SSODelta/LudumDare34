@@ -31,7 +31,7 @@ public class CommandIssuer : MonoBehaviour {
 	public Sprite NEW_MENU, STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 	public Sprite HP3, HP2, HP1;
 
-	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
+	public AudioClip aSTART, aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
 	public AudioClip mLOW, mNORMAL;
 	public AudioClip aD1, aD2, aD3, aD4, aD5, aD6, aD7;  
 
@@ -113,7 +113,8 @@ public class CommandIssuer : MonoBehaviour {
 		aWALK_1     = (Resources.Load("Sounds/Walk1") as AudioClip);
 		aWOOSH      = (Resources.Load("Sounds/Woosh") as AudioClip);
 		aGONG       = (Resources.Load("Sounds/gong") as AudioClip);
-		aREADY      = (Resources.Load("Sounds/READY") as AudioClip);
+        aSTART      = (Resources.Load("Sounds/Start") as AudioClip);
+        aREADY      = (Resources.Load("Sounds/READY") as AudioClip);
 		aSPLAT      = (Resources.Load("Sounds/Splat") as AudioClip);
 		aOW         = (Resources.Load("Sounds/Oww") as AudioClip);
 
@@ -251,11 +252,13 @@ public class CommandIssuer : MonoBehaviour {
 		if (MENU && Input.GetKeyUp (KeyCode.LeftArrow)) {
 			hideMenu ();
 			gc.HARD=false;
+            playSound(aSTART);
 		}
 		if (MENU && Input.GetKeyUp (KeyCode.RightArrow)) {
 			hideMenu ();
 			gc.HARD=true;
-		}
+            playSound(aSTART);
+        }
 
 		setAlpha (sr_black, blackAlpha);
 		setAlpha (sr_menu,  menuAlpha);
