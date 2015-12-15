@@ -33,9 +33,7 @@ public class Player : MonoBehaviour {
 
 		ci.setPlayer (this);
 		col = this.GetComponent<BoxCollider2D> ();
-
-
-	}
+    }
 
 	private void jump(float dx){
 		if (GROUNDED) {

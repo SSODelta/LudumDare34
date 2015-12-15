@@ -7,7 +7,7 @@ public class CommandIssuer : MonoBehaviour {
 	private Player p;
 	private Command cmd;
 
-	private GameController gc;
+	public GameController gc;
 
 	private int ts = 0, tsmax = 50;
 	private int tw = 0, twmax = 13;
@@ -29,7 +29,7 @@ public class CommandIssuer : MonoBehaviour {
 
 	private SpriteRenderer sr;
 	public Sprite NEW_MENU, STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
-	public Sprite HP3, HP2, HP1;
+	public Sprite HP6, HP5, HP4, HP3, HP2, HP1;
 
 	public AudioClip aSTART, aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
 	public AudioClip mLOW, mNORMAL;
@@ -40,7 +40,7 @@ public class CommandIssuer : MonoBehaviour {
 	public AudioSource bgmusic, rattles;
 	private int kills = 0;
 
-	private SpriteRenderer health;
+	public SpriteRenderer health;
 
 	public void newKill(){
 		sc.drawNumber (++kills);
@@ -78,7 +78,14 @@ public class CommandIssuer : MonoBehaviour {
 		black.transform.position = v;
 		sr_black = black.GetComponent<SpriteRenderer> ();
 
-		ko = (GameObject)GameObject.Find ("KO_0");
+        //--
+
+
+        v = health.transform.position;
+        v.z = 1000;
+        health.transform.position = v;
+
+        ko = (GameObject)GameObject.Find ("KO_0");
 		
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
@@ -101,8 +108,11 @@ public class CommandIssuer : MonoBehaviour {
 		HP1 = Resources.Load<Sprite> ("Sprites/HP/1_HP");
 		HP2 = Resources.Load<Sprite> ("Sprites/HP/2_HP");
 		HP3 = Resources.Load<Sprite> ("Sprites/HP/3_HP");
+        HP4 = Resources.Load<Sprite> ("Sprites/HP/4_HP");
+        HP5 = Resources.Load<Sprite> ("Sprites/HP/5_HP");
+        HP6 = Resources.Load<Sprite> ("Sprites/HP/6_HP");
 
-		BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
+        BTN_OFF    = Resources.Load <Sprite> ("Sprites/ButtonUp");
 		BTN_ON     = Resources.Load <Sprite> ("Sprites/ButtonDown");
 		
 		aPUNCH      = (Resources.Load("Sounds/Punch") as AudioClip);
@@ -223,13 +233,28 @@ public class CommandIssuer : MonoBehaviour {
 			Destroy (health);
 		}
 
-		if (p.health == 2) {
-			health.sprite = HP2;
-		} else if (p.health == 1) {
-			bgmusic.clip = mLOW;
-			bgmusic.Play();
-			health.sprite = HP1;
-		} 
+        if (p.health == 5)
+        {
+            health.sprite = HP5;
+        }
+        else if (p.health == 4)
+        {
+            health.sprite = HP4;
+        }
+        else if (p.health == 3)
+        {
+            health.sprite = HP3;
+        }
+        else if (p.health == 2)
+        {
+            health.sprite = HP2;
+        }
+        else if (p.health == 1)
+        {
+            bgmusic.clip = mLOW;
+            bgmusic.Play();
+            health.sprite = HP1;
+        } 
 
 	}
 	private void setAlpha(SpriteRenderer s, float alpha){
@@ -244,7 +269,12 @@ public class CommandIssuer : MonoBehaviour {
 		Vector3 v = menu.transform.position;
 		v.z = 90;
 		menu.transform.position = v;
-	}
+        //--
+
+        v = health.transform.position;
+        v.z = 1;
+        health.transform.position = v;
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -253,11 +283,15 @@ public class CommandIssuer : MonoBehaviour {
 			hideMenu ();
 			gc.HARD=false;
             playSound(aSTART);
+            p.health = 6;
+            health.sprite = HP6;
 		}
 		if (MENU && Input.GetKeyUp (KeyCode.RightArrow)) {
 			hideMenu ();
 			gc.HARD=true;
             playSound(aSTART);
+            p.health = 3;
+            health.sprite = HP3;
         }
 
 		setAlpha (sr_black, blackAlpha);
