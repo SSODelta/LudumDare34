@@ -28,7 +28,7 @@ public class CommandIssuer : MonoBehaviour {
 	public bool LOADING = true, MENU = true;
 
 	private SpriteRenderer sr;
-	public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
+	public Sprite NEW_MENU, STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
 	public Sprite HP3, HP2, HP1;
 
 	public AudioClip aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
@@ -66,7 +66,7 @@ public class CommandIssuer : MonoBehaviour {
 		v.z = -6;
 		menu.transform.position = v;
 		sr_menu = menu.GetComponent<SpriteRenderer> ();
-
+        
 		 v = go_scmenu.transform.position;
 		v.z = 7;
 		go_scmenu.transform.position = v;
@@ -83,7 +83,8 @@ public class CommandIssuer : MonoBehaviour {
 		cmd = new Command ();
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
 
-		STAND_1    = Resources.Load <Sprite> ("Sprites/Stand1");
+        NEW_MENU   = Resources.Load <Sprite> ("Sprites/LDMenu");
+        STAND_1    = Resources.Load <Sprite> ("Sprites/Stand1");
 		STAND_2    = Resources.Load <Sprite> ("Sprites/Stand2");
 		KICK_FLY   = Resources.Load <Sprite> ("Sprites/FlyingKick");
 		KICK_SLIDE = Resources.Load <Sprite> ("Sprites/SlideKick");
@@ -265,9 +266,16 @@ public class CommandIssuer : MonoBehaviour {
 				menuAlpha +=0.02f;
 				blackAlpha=0.6f;
 				sc_menu.setAlpha(menuAlpha);
-				if(sc_menu.empty()){
-					sc_menu.drawNumber(LAST_SCORE);
-					sc_menu.setAlpha(0f);
+				if(sc_menu.empty() && !sr_menu.sprite.Equals(NEW_MENU))
+                {
+                    sc_menu.setAlpha(0f);
+                    if (LAST_SCORE != 0)
+                    {
+                        sc_menu.drawNumber(LAST_SCORE);
+                    } else
+                    {
+                        sr_menu.sprite = NEW_MENU;
+                    }
 				}
 			}
 			if(blackAlpha<=0){
