@@ -161,7 +161,7 @@ public class Player : MonoBehaviour {
         attack = dashSpeed==0 ? 0 : Mathf.FloorToInt(Mathf.Sign(dashSpeed));
 		if (punch > 0 && punch < 20)
 			attack = 0;
-        if(attack == 0 && ci.isSprite(ci.KICK_FLY)) attack = -Mathf.FloorToInt(Mathf.Sign(transform.localScale.x));
+        if(attack == 0 && (ci.isSprite(ci.KICK_FLY) || ci.isSprite(ci.GREEN_KICK_FLY) || ci.isSprite(ci.PURPLE_KICK_FLY) || ci.isSprite(ci.GOLD_KICK_FLY))) attack = -Mathf.FloorToInt(Mathf.Sign(transform.localScale.x));
 		if (ci.th > 0)
 			attack = 0;
 
@@ -200,10 +200,10 @@ public class Player : MonoBehaviour {
 
 		if (dashSpeed == 0) {
 			setBoundingBox(0.18f);
-			if (RIGHT && !ci.isSprite(ci.STAND_2)) {
+			if (RIGHT && !ci.isSprite(ci.STAND_2) && !ci.isSprite(ci.GREEN_STAND_2) && !ci.isSprite(ci.PURPLE_STAND_2) && !ci.isSprite(ci.GOLD_STAND_2)) {
 				rb.AddForce (100*new Vector2 (WALK_SPEED, 0));
 			}
-			if (LEFT && !ci.isSprite(ci.STAND_2)) {
+			if (LEFT && !ci.isSprite(ci.STAND_2) && !ci.isSprite(ci.GREEN_STAND_2) && !ci.isSprite(ci.PURPLE_STAND_2) && !ci.isSprite(ci.GOLD_STAND_2)) {
 				rb.AddForce (100*new Vector2 (-WALK_SPEED, 0));
 			}
 		} else {

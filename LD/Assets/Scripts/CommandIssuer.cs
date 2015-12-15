@@ -16,7 +16,7 @@ public class CommandIssuer : MonoBehaviour {
     private int headband = 0;
 
 	private static int LAST_SCORE = 0;
-    private static int PROGRESS = 2;
+    private static int PROGRESS = 0;
 
 	private ScoreController sc, sc_menu;
 
@@ -442,7 +442,8 @@ public class CommandIssuer : MonoBehaviour {
 			p.RIGHT = false;
 			th--;
 			setSprite (HURT);
-			return;
+            giveHeadband();
+            return;
 		}
 
 		if (p.LEFT && p.transform.localScale.x < 0)
@@ -454,31 +455,50 @@ public class CommandIssuer : MonoBehaviour {
 		if (!p.LEFT && !p.RIGHT && ++ts >= tsmax) {
 			ts=0;
 
-			if(isSprite(STAND_1) || isSprite (WALK1)  || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)){
+			if(isSprite(STAND_1) || isSprite (WALK1)  || isSprite (WALK2) || isSprite (WALK3) || isSprite (WALK4) || isSprite (WALK5) || isSprite (WALK6)
+                || isSprite(GREEN_STAND_1) || isSprite(GREEN_WALK1) || isSprite(GREEN_WALK2) || isSprite(GREEN_WALK3) || isSprite(GREEN_WALK4) || isSprite(GREEN_WALK5) || isSprite(GREEN_WALK6)
+                || isSprite(PURPLE_STAND_1) || isSprite(PURPLE_WALK1) || isSprite(PURPLE_WALK2) || isSprite(PURPLE_WALK3) || isSprite(PURPLE_WALK4) || isSprite(PURPLE_WALK5) || isSprite(PURPLE_WALK6)
+                || isSprite(GOLD_STAND_1) || isSprite(GOLD_WALK1) || isSprite(GOLD_WALK2) || isSprite(GOLD_WALK3) || isSprite(GOLD_WALK4) || isSprite(GOLD_WALK5) || isSprite(GOLD_WALK6)) {
 				setSprite(STAND_2);
-			} else if(isSprite(STAND_2)|| isSprite (HURT) || isSprite (KICK_FLY)) {
+			} else if(isSprite(STAND_2)|| isSprite (HURT) || isSprite (KICK_FLY)
+                || isSprite(GREEN_STAND_2) || isSprite(GREEN_HURT) || isSprite(GREEN_KICK_FLY)
+                || isSprite(PURPLE_STAND_2) || isSprite(PURPLE_HURT) || isSprite(PURPLE_KICK_FLY)
+                || isSprite(GOLD_STAND_2) || isSprite(GOLD_HURT) || isSprite(GOLD_KICK_FLY)) {
 				setSprite(STAND_1);}
 		}
 
 		if ((p.LEFT || p.RIGHT) && p.dashSpeed==0 && ++tw >= twmax) {
 			tw=0;
 
-			if(isSprite (STAND_2) || isSprite (HURT)){
+			if(isSprite (STAND_2) || isSprite (HURT) || isSprite(GREEN_STAND_2) || isSprite(GREEN_HURT) || isSprite(PURPLE_STAND_2) || isSprite(PURPLE_HURT) || isSprite(GOLD_STAND_2) || isSprite(GOLD_HURT))
+            {
 				setSprite (STAND_1);
-			} else if(isSprite(STAND_1)){
+			} else if(isSprite(STAND_1) || isSprite(GOLD_STAND_1) || isSprite(PURPLE_STAND_1) || isSprite(GREEN_STAND_1))
+            {
 				setSprite (WALK1);
-			} else if(isSprite(WALK1)){
+			} else if(isSprite(WALK1) || isSprite(GOLD_WALK1) || isSprite(PURPLE_WALK1) || isSprite(GREEN_WALK1))
+            {
 				setSprite (WALK2);
-			} else if(isSprite(WALK2)){
-				setSprite (WALK3);
-			} else if(isSprite(WALK3)){
-				setSprite (WALK4);
-			} else if(isSprite(WALK4)){
-				setSprite (WALK5);
-			} else if(isSprite(WALK5)){
-				setSprite (WALK6);
-			} else if(isSprite(WALK6)){
-				setSprite (STAND_1);
+            }
+            else if (isSprite(WALK2) || isSprite(GOLD_WALK2) || isSprite(PURPLE_WALK2) || isSprite(GREEN_WALK2))
+            {
+                setSprite (WALK3);
+            }
+            else if (isSprite(WALK3) || isSprite(GOLD_WALK3) || isSprite(PURPLE_WALK3) || isSprite(GREEN_WALK3))
+            {
+                setSprite (WALK4);
+            }
+            else if (isSprite(WALK4) || isSprite(GOLD_WALK4) || isSprite(PURPLE_WALK4) || isSprite(GREEN_WALK4))
+            {
+                setSprite (WALK5);
+            }
+            else if (isSprite(WALK5) || isSprite(GOLD_WALK5) || isSprite(PURPLE_WALK5) || isSprite(GREEN_WALK5))
+            {
+                setSprite (WALK6);
+            }
+            else if (isSprite(WALK6) || isSprite(GOLD_WALK6) || isSprite(PURPLE_WALK6) || isSprite(GREEN_WALK6))
+            {
+                setSprite (STAND_1);
 			}
 		}
 
