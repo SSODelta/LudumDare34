@@ -13,7 +13,10 @@ public class CommandIssuer : MonoBehaviour {
 	private int tw = 0, twmax = 13;
 	public  int th = 0;
 
+    private int headband = 0;
+
 	private static int LAST_SCORE = 0;
+    private static int PROGRESS = 0;
 
 	private ScoreController sc, sc_menu;
 
@@ -28,8 +31,14 @@ public class CommandIssuer : MonoBehaviour {
 	public bool LOADING = true, MENU = true;
 
 	private SpriteRenderer sr;
-	public Sprite NEW_MENU, STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6, BTN_OFF, BTN_ON;
-	public Sprite HP6, HP5, HP4, HP3, HP2, HP1;
+	public Sprite NEW_MENU, BTN_OFF, BTN_ON;
+
+    public Sprite STAND_1, STAND_2, KICK_FLY, KICK_SLIDE, PUNCH, DEAD, HURT, WALK1, WALK2, WALK3, WALK4, WALK5, WALK6;
+    public Sprite GOLD_STAND_1, GOLD_STAND_2, GOLD_KICK_FLY, GOLD_KICK_SLIDE, GOLD_PUNCH, GOLD_DEAD, GOLD_HURT, GOLD_WALK1, GOLD_WALK2, GOLD_WALK3, GOLD_WALK4, GOLD_WALK5, GOLD_WALK6;
+    public Sprite GREEN_STAND_1, GREEN_STAND_2, GREEN_KICK_FLY, GREEN_KICK_SLIDE, GREEN_PUNCH, GREEN_DEAD, GREEN_HURT, GREEN_WALK1, GREEN_WALK2, GREEN_WALK3, GREEN_WALK4, GREEN_WALK5, GREEN_WALK6;
+    public Sprite PURPLE_STAND_1, PURPLE_STAND_2, PURPLE_KICK_FLY, PURPLE_KICK_SLIDE, PURPLE_PUNCH, PURPLE_DEAD, PURPLE_HURT, PURPLE_WALK1, PURPLE_WALK2, PURPLE_WALK3, PURPLE_WALK4, PURPLE_WALK5, PURPLE_WALK6;
+
+    public Sprite HP6, HP5, HP4, HP3, HP2, HP1;
 
 	public AudioClip aSTART, aPUNCH, aPUNCH_1, aPUNCH_2, aKICK, aKICK_1, aWALK_1, aWOOSH, aGONG, aREADY, aSPLAT, aOW;
 	public AudioClip mLOW, mNORMAL;
@@ -49,7 +58,12 @@ public class CommandIssuer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		GameObject go_scmenu = GameObject.Find ("scMenu");
+        if (LAST_SCORE >= 10) PROGRESS = Mathf.Max(1, PROGRESS);
+        if (LAST_SCORE >= 25) PROGRESS = Mathf.Max(2, PROGRESS);
+        if (LAST_SCORE >= 55) PROGRESS = Mathf.Max(3, PROGRESS);
+
+
+        GameObject go_scmenu = GameObject.Find ("scMenu");
 		Time.timeScale = 1f;
 		gc = GameObject.Find ("gc").GetComponent<GameController> ();
 		sc = GameObject.Find ("kills").GetComponent<ScoreController> ();
@@ -91,6 +105,8 @@ public class CommandIssuer : MonoBehaviour {
 		cmds = new string[]{"l","r","ll","rr","lrl","rlr"};
 
         NEW_MENU   = Resources.Load <Sprite> ("Sprites/LDMenu");
+
+
         STAND_1    = Resources.Load <Sprite> ("Sprites/Stand1");
 		STAND_2    = Resources.Load <Sprite> ("Sprites/Stand2");
 		KICK_FLY   = Resources.Load <Sprite> ("Sprites/FlyingKick");
@@ -105,7 +121,49 @@ public class CommandIssuer : MonoBehaviour {
 		WALK5      = Resources.Load <Sprite> ("Sprites/Walk5_1");
 		WALK6      = Resources.Load <Sprite> ("Sprites/Walk6_1");
 
-		HP1 = Resources.Load<Sprite> ("Sprites/HP/1_HP");
+        GREEN_STAND_1 = Resources.Load<Sprite>("Sprites/GreenPlayer/Stand1");
+        GREEN_STAND_2 = Resources.Load<Sprite>("Sprites/GreenPlayer/Stand2");
+        GREEN_KICK_FLY = Resources.Load<Sprite>("Sprites/GreenPlayer/FlyingKick");
+        GREEN_KICK_SLIDE = Resources.Load<Sprite>("Sprites/GreenPlayer/SlideKick");
+        GREEN_PUNCH = Resources.Load<Sprite>("Sprites/GreenPlayer/FistPunch");
+        GREEN_DEAD = Resources.Load<Sprite>("Sprites/GreenPlayer/Dead");
+        GREEN_HURT = Resources.Load<Sprite>("Sprites/GreenPlayer/Hurt");
+        GREEN_WALK1 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk1_1");
+        GREEN_WALK2 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk2_1");
+        GREEN_WALK3 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk3_1");
+        GREEN_WALK4 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk4_1");
+        GREEN_WALK5 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk5_1");
+        GREEN_WALK6 = Resources.Load<Sprite>("Sprites/GreenPlayer/Walk6_1");
+
+        GOLD_STAND_1 = Resources.Load<Sprite>("Sprites/GoldPlayer/Stand1");
+        GOLD_STAND_2 = Resources.Load<Sprite>("Sprites/GoldPlayer/Stand2");
+        GOLD_KICK_FLY = Resources.Load<Sprite>("Sprites/GoldPlayer/FlyingKick");
+        GOLD_KICK_SLIDE = Resources.Load<Sprite>("Sprites/GoldPlayer/SlideKick");
+        GOLD_PUNCH = Resources.Load<Sprite>("Sprites/GoldPlayer/FistPunch");
+        GOLD_DEAD = Resources.Load<Sprite>("Sprites/GoldPlayer/Dead");
+        GOLD_HURT = Resources.Load<Sprite>("Sprites/GoldPlayer/Hurt");
+        GOLD_WALK1 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk1_1");
+        GOLD_WALK2 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk2_1");
+        GOLD_WALK3 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk3_1");
+        GOLD_WALK4 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk4_1");
+        GOLD_WALK5 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk5_1");
+        GOLD_WALK6 = Resources.Load<Sprite>("Sprites/GoldPlayer/Walk6_1");
+        
+        PURPLE_STAND_1 = Resources.Load<Sprite>("Sprites/PurplePlayer/Stand1");
+        PURPLE_STAND_2 = Resources.Load<Sprite>("Sprites/PurplePlayer/Stand2");
+        PURPLE_KICK_FLY = Resources.Load<Sprite>("Sprites/PurplePlayer/FlyingKick");
+        PURPLE_KICK_SLIDE = Resources.Load<Sprite>("Sprites/PurplePlayer/SlideKick");
+        PURPLE_PUNCH = Resources.Load<Sprite>("Sprites/PurplePlayer/FistPunch");
+        PURPLE_DEAD = Resources.Load<Sprite>("Sprites/PurplePlayer/Dead");
+        PURPLE_HURT = Resources.Load<Sprite>("Sprites/PurplePlayer/Hurt");
+        PURPLE_WALK1 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk1_1");
+        PURPLE_WALK2 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk2_1");
+        PURPLE_WALK3 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk3_1");
+        PURPLE_WALK4 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk4_1");
+        PURPLE_WALK5 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk5_1");
+        PURPLE_WALK6 = Resources.Load<Sprite>("Sprites/PurplePlayer/Walk6_1");
+
+        HP1 = Resources.Load<Sprite> ("Sprites/HP/1_HP");
 		HP2 = Resources.Load<Sprite> ("Sprites/HP/2_HP");
 		HP3 = Resources.Load<Sprite> ("Sprites/HP/3_HP");
         HP4 = Resources.Load<Sprite> ("Sprites/HP/4_HP");
@@ -216,6 +274,51 @@ public class CommandIssuer : MonoBehaviour {
 			cmd = new Command ();
 		}
 	}
+
+    private void giveHeadband()
+    {
+        if (isSprite(STAND_1)    && headband == 1)  setSprite(GREEN_STAND_1);
+        if (isSprite(STAND_2)    && headband == 1)  setSprite(GREEN_STAND_2);
+        if (isSprite(KICK_FLY)   && headband == 1)  setSprite(GREEN_KICK_FLY);
+        if (isSprite(KICK_SLIDE) && headband == 1)  setSprite(GREEN_KICK_SLIDE);
+        if (isSprite(PUNCH)      && headband == 1)  setSprite(GREEN_PUNCH);
+        if (isSprite(DEAD)       && headband == 1)  setSprite(GREEN_DEAD);
+        if (isSprite(HURT)       && headband == 1)  setSprite(GREEN_HURT);
+        if (isSprite(WALK1)      && headband == 1)  setSprite(GREEN_WALK1);
+        if (isSprite(WALK2)      && headband == 1)  setSprite(GREEN_WALK2);
+        if (isSprite(WALK3)      && headband == 1)  setSprite(GREEN_WALK3);
+        if (isSprite(WALK4)      && headband == 1)  setSprite(GREEN_WALK4);
+        if (isSprite(WALK5)      && headband == 1)  setSprite(GREEN_WALK5);
+        if (isSprite(WALK6)      && headband == 1)  setSprite(GREEN_WALK6);
+        
+        if (isSprite(STAND_1)    && headband == 2)  setSprite(PURPLE_STAND_1);
+        if (isSprite(STAND_2)    && headband == 2)  setSprite(PURPLE_STAND_2);
+        if (isSprite(KICK_FLY)   && headband == 2)  setSprite(PURPLE_KICK_FLY);
+        if (isSprite(KICK_SLIDE) && headband == 2)  setSprite(PURPLE_KICK_SLIDE);
+        if (isSprite(PUNCH)      && headband == 2)  setSprite(PURPLE_PUNCH);
+        if (isSprite(DEAD)       && headband == 2)  setSprite(PURPLE_DEAD);
+        if (isSprite(HURT)       && headband == 2)  setSprite(PURPLE_HURT);
+        if (isSprite(WALK1)      && headband == 2)  setSprite(PURPLE_WALK1);
+        if (isSprite(WALK2)      && headband == 2)  setSprite(PURPLE_WALK2);
+        if (isSprite(WALK3)      && headband == 2)  setSprite(PURPLE_WALK3);
+        if (isSprite(WALK4)      && headband == 2)  setSprite(PURPLE_WALK4);
+        if (isSprite(WALK5)      && headband == 2)  setSprite(PURPLE_WALK5);
+        if (isSprite(WALK6)      && headband == 2)  setSprite(PURPLE_WALK6);
+        
+        if (isSprite(STAND_1)    && headband == 3)  setSprite(GOLD_STAND_1);
+        if (isSprite(STAND_2)    && headband == 3)  setSprite(GOLD_STAND_2);
+        if (isSprite(KICK_FLY)   && headband == 3)  setSprite(GOLD_KICK_FLY);
+        if (isSprite(KICK_SLIDE) && headband == 3)  setSprite(GOLD_KICK_SLIDE);
+        if (isSprite(PUNCH)      && headband == 3)  setSprite(GOLD_PUNCH);
+        if (isSprite(DEAD)       && headband == 3)  setSprite(GOLD_DEAD);
+        if (isSprite(HURT)       && headband == 3)  setSprite(GOLD_HURT);
+        if (isSprite(WALK1)      && headband == 3)  setSprite(GOLD_WALK1);
+        if (isSprite(WALK2)      && headband == 3)  setSprite(GOLD_WALK2);
+        if (isSprite(WALK3)      && headband == 3)  setSprite(GOLD_WALK3);
+        if (isSprite(WALK4)      && headband == 3)  setSprite(GOLD_WALK4);
+        if (isSprite(WALK5)      && headband == 3)  setSprite(GOLD_WALK5);
+        if (isSprite(WALK6)      && headband == 3)  setSprite(GOLD_WALK6);
+    }
 
 	public void idle(){
 		setSprite (STAND_2);
